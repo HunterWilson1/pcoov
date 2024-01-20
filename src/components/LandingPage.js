@@ -1,4 +1,3 @@
-// LandingPage.js
 import React from 'react';
 import { Link } from 'react-router-dom';
 
@@ -10,12 +9,13 @@ const LandingPage = () => {
           Find your Olive Oil or Vinegar
         </h1>
         <h2>
-            *insert description here*
+          *insert description here*
         </h2>
+        <Link to="/quiz">
           <button className="flex items-center justify-center bg-lime-500 hover:bg-lime-600 text-white px-4 py-2 rounded">
             Start
           </button>
-
+        </Link>
       </div>
     </div>
   );

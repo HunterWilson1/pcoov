@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { oliveOilsData } from "../data/Oo";
 import { useNavigate } from 'react-router-dom';
 
-const Quiz = () => {
+const OOQuiz = () => {
   const [answers, setAnswers] = useState([]);
   const [questionIndex, setQuestionIndex] = useState(0);
   const [result, setResult] = useState(null);
@@ -14,13 +14,6 @@ const Quiz = () => {
 
 
   const questions = [
-    {
-        text: 'Are you looking for an Olive Oil or Balsamic?',
-        options: [
-            { answer: 'Olive Oil', tags: ['oliveOil'] },
-            { answer: 'Balsamic', tags: ['balsamic'] },
-        ],
-    },
     {
         text: 'Which flavor profile do you prefer?',
         options: [
@@ -158,4 +151,4 @@ const Quiz = () => {
   );
 };
 
-export default Quiz;
+export default OOQuiz;

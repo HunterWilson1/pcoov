@@ -1,28 +1,66 @@
 import React, { useState } from "react";
 import { oliveOilsData } from "../data/Oo";
+import { useNavigate } from 'react-router-dom';
 
 const Quiz = () => {
   const [answers, setAnswers] = useState([]);
   const [questionIndex, setQuestionIndex] = useState(0);
   const [result, setResult] = useState(null);
+  const navigate = useNavigate();
+
+  const goToHomePage = () => {
+    navigate('/');
+  };
+
 
   const questions = [
     {
-      text: 'Are you looking for an Olive Oil or Balsamic',
-      options: [
-        { answer: 'Olive Oil', tags: ['oliveOil'] },
-        { answer: 'Balsamic', tags: ['balsamic'] },
-      ],
+        text: 'Are you looking for an Olive Oil or Balsamic?',
+        options: [
+            { answer: 'Olive Oil', tags: ['oliveOil'] },
+            { answer: 'Balsamic', tags: ['balsamic'] },
+        ],
     },
     {
-      text: 'What taste profile are you looking for?',
-      options: [
-        { answer: 'Earthy', tags: ['earthy'] },
-        { answer: 'Tart', tags: ['tart'] },
-        { answer: 'Herbaceous', tags: ['herbaceous']}
-      ],
+        text: 'Which flavor profile do you prefer?',
+        options: [
+            { answer: 'Herbaceous & Aromatic', tags: ['herbaceous', 'aromatic'] },
+            { answer: 'Citrus & Zesty', tags: ['citrus', 'zesty'] },
+            { answer: 'Earthy & Savory', tags: ['earthy', 'savory'] },
+            { answer: 'Spicy & Bold', tags: ['spicy', 'bold'] },
+            { answer: 'Rich & Smooth', tags: ['rich', 'smooth'] },
+        ],
     },
-  ];
+    {
+        text: 'What is your primary use for the olive oil?',
+        options: [
+            { answer: 'Cooking', tags: ['cooking'] },
+            { answer: 'Dressing Salads', tags: ['dressing', 'salads'] },
+            { answer: 'Dipping & Marinades', tags: ['dipping', 'marinades'] },
+            { answer: 'Baking', tags: ['baking'] },
+            { answer: 'General Versatility', tags: ['versatile'] },
+        ],
+    },
+    {
+        text: 'Select your preferred intensity',
+        options: [
+            { answer: 'Mild', tags: ['mild'] },
+            { answer: 'Medium', tags: ['medium'] },
+            { answer: 'Strong', tags: ['strong'] },
+        ],
+    },
+    {
+        text: 'Do you have a preference for specific regional flavors?',
+        options: [
+            { answer: 'Italian', tags: ['Italian'] },
+            { answer: 'Mediterranean', tags: ['Mediterranean'] },
+            { answer: 'Asian', tags: ['Asian'] },
+            { answer: 'Mexican', tags: ['Mexican'] },
+            { answer: 'French', tags: ['French'] },
+            { answer: 'No Specific Preference', tags: [] },
+        ],
+    },
+];
 
   const handleAnswer = (selectedTags) => {
     setAnswers([...answers, ...selectedTags]);
@@ -32,23 +70,20 @@ const Quiz = () => {
       calculateResult();
     }
   };
+
   const calculateResult = () => {
-    // Count the occurrences of each tag in answers
     const tagCounts = answers.reduce((acc, tag) => {
       acc[tag] = (acc[tag] || 0) + 1;
       return acc;
     }, {});
-  
-    // Find the most common tag
+
     const mostCommonTag = Object.keys(tagCounts).reduce((a, b) => (tagCounts[a] > tagCounts[b] ? a : b));
-  
-    // Get all matching olive oils based on the most common tag
+
     const matchingOliveOils = oliveOilsData.filter(oil => oil.tags.includes(mostCommonTag));
-  
-    // Find the olive oil with the most corresponding tags
+
     let mostMatchingOliveOil = null;
     let mostMatches = 0;
-  
+
     matchingOliveOils.forEach(oil => {
       const currentMatches = oil.tags.filter(tag => answers.includes(tag)).length;
       if (currentMatches > mostMatches) {
@@ -56,16 +91,18 @@ const Quiz = () => {
         mostMatches = currentMatches;
       }
     });
-  
-    // Display only the item with the most corresponding tags
-    const result = {
+
+    setResult({
       oliveOils: mostMatchingOliveOil,
-    };
-  
-    setResult(result);
+    });
   };
-  
-  
+
+  const resetQuiz = () => {
+    setAnswers([]);
+    setQuestionIndex(0);
+    setResult(null);
+  };
+
   return (
     <div className="min-h-screen flex items-center justify-center bg-lime-900">
       <div className="bg-lime-100 p-8 rounded-lg flex flex-col items-center justify-center">
@@ -77,7 +114,7 @@ const Quiz = () => {
                 <li key={optionIndex}>
                   <button
                     onClick={() => handleAnswer(option.tags)}
-                    className="mb-2 bg-lime-500 hover:bg-lime-600 text-white px-4 py-2 rounded" // Add margin-bottom for spacing
+                    className="mb-2 bg-lime-500 hover:bg-lime-600 text-white px-4 py-2 rounded"
                   >
                     {option.answer}
                   </button>
@@ -102,6 +139,18 @@ const Quiz = () => {
                 </ul>
               </div>
             )}
+            <button
+              onClick={resetQuiz}
+              className="mt-4 bg-lime-500 hover:bg-lime-600 text-white px-4 py-2 rounded"
+            >
+              Restart Quiz
+            </button>
+            <button
+        onClick={goToHomePage}
+        className="mt-4 bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded"
+      >
+        Back to Home Page
+      </button>
           </div>
         )}
       </div>

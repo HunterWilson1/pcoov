@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { oliveOilsData } from "../data/Oo";
 import { useNavigate } from 'react-router-dom';
+import oliveBackground from '../images/olive.png';
 
 const OOQuiz = () => {
   const [answers, setAnswers] = useState([]);
@@ -97,8 +98,11 @@ const OOQuiz = () => {
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-lime-900">
-      <div className="bg-lime-100 p-8 rounded-lg flex flex-col items-center justify-center">
+    <div 
+      style={{ backgroundImage: `url(${oliveBackground})`, backgroundSize: 'cover' }} 
+      className="min-h-screen flex items-center justify-center"
+    >
+      <div className="bg-white p-8 rounded-lg shadow-md flex flex-col items-center justify-center">
         {questionIndex < questions.length ? (
           <div>
             <h3 className="mb-4">{questions[questionIndex].text}</h3>

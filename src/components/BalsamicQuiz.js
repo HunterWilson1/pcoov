@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { balsamicData } from "../data/Balsamic"; // Ensure this data file exists and is structured correctly
 import { useNavigate } from 'react-router-dom';
+import grapeBackground from '../images/grape.webp'; // Import your grape background image
 
 const BalsamicQuiz = () => {
   const [answers, setAnswers] = useState([]);
@@ -11,7 +12,6 @@ const BalsamicQuiz = () => {
   const goToHomePage = () => {
     navigate('/');
   };
-
   const questions = [
     {
       text: 'Which flavor profile do you prefer for Balsamic?',
@@ -82,8 +82,11 @@ const BalsamicQuiz = () => {
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-purple-900">
-      <div className="bg-purple-100 p-8 rounded-lg flex flex-col items-center justify-center">
+    <div 
+      style={{ backgroundImage: `url(${grapeBackground})`, backgroundSize: 'cover' }} 
+      className="min-h-screen flex items-center justify-center"
+    >
+      <div className="bg-white p-8 rounded-lg shadow-md flex flex-col items-center justify-center">
         {questionIndex < questions.length ? (
           <div>
             <h3 className="mb-4">{questions[questionIndex].text}</h3>

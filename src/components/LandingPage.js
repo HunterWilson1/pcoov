@@ -1,5 +1,7 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
+import oliveBackground from '../images/olive.png';
+import grapeBackground from '../images/grape.webp';
 
 const LandingPage = () => {
   const [isOliveOilQuiz, setIsOliveOilQuiz] = useState(true);
@@ -8,13 +10,17 @@ const LandingPage = () => {
     setIsOliveOilQuiz(!isOliveOilQuiz);
   };
 
-  const bgColor = isOliveOilQuiz ? "bg-lime-900" : "bg-purple-900";
+  const backgroundStyle = {
+    backgroundImage: `url(${isOliveOilQuiz ? oliveBackground : grapeBackground})`,
+    transition: 'background-image 0.5s ease-in-out' // Add transition effect
+  };
+
   const buttonColor = isOliveOilQuiz ? "bg-lime-500 hover:bg-lime-600" : "bg-purple-500 hover:bg-purple-600";
   const quizLink = isOliveOilQuiz ? "/olive-oil-quiz" : "/balsamic-quiz";
 
   return (
-    <div className={`min-h-screen flex items-center justify-center ${bgColor} transition-colors duration-500`}>
-      <div className="bg-lime-100 p-8 rounded-lg flex flex-col items-center justify-center">
+    <div style={backgroundStyle} className="min-h-screen flex items-center justify-center bg-cover">
+      <div className="bg-white p-8 rounded-lg flex flex-col items-center justify-center shadow-md">
         <h1 className="text-black text-2xl mb-4">
           Find your Olive Oil or Vinegar
         </h1>

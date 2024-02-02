@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { oliveOilsData } from "../data/Oo";
-import { useNavigate } from 'react-router-dom';
-import oliveBackground from '../images/olive.png';
+import { useNavigate } from "react-router-dom";
+import oliveBackground from "../images/olive.png";
 
 const OOQuiz = () => {
   const [answers, setAnswers] = useState([]);
@@ -10,51 +10,50 @@ const OOQuiz = () => {
   const navigate = useNavigate();
 
   const goToHomePage = () => {
-    navigate('/');
+    navigate("/");
   };
-
 
   const questions = [
     {
-        text: 'Which flavor profile do you prefer?',
-        options: [
-            { answer: 'Herbaceous & Aromatic', tags: ['herbaceous', 'aromatic'] },
-            { answer: 'Citrus & Zesty', tags: ['citrus', 'zesty'] },
-            { answer: 'Earthy & Savory', tags: ['earthy', 'savory'] },
-            { answer: 'Spicy & Bold', tags: ['spicy', 'bold'] },
-            { answer: 'Rich & Smooth', tags: ['rich', 'smooth'] },
-        ],
+      text: "Which flavor profile do you prefer?",
+      options: [
+        { answer: "Herbaceous & Aromatic", tags: ["herbaceous", "aromatic"] },
+        { answer: "Citrus & Zesty", tags: ["citrus", "zesty"] },
+        { answer: "Earthy & Savory", tags: ["earthy", "savory"] },
+        { answer: "Spicy & Bold", tags: ["spicy", "bold"] },
+        { answer: "Rich & Smooth", tags: ["rich", "smooth"] },
+      ],
     },
     {
-        text: 'What is your primary use for the olive oil?',
-        options: [
-            { answer: 'Cooking', tags: ['cooking'] },
-            { answer: 'Dressing Salads', tags: ['dressing', 'salads'] },
-            { answer: 'Dipping & Marinades', tags: ['dipping', 'marinades'] },
-            { answer: 'Baking', tags: ['baking'] },
-            { answer: 'General Versatility', tags: ['versatile'] },
-        ],
+      text: "What is your primary use for the olive oil?",
+      options: [
+        { answer: "Cooking", tags: ["cooking"] },
+        { answer: "Dressing Salads", tags: ["dressing", "salads"] },
+        { answer: "Dipping & Marinades", tags: ["dipping", "marinades"] },
+        { answer: "Baking", tags: ["baking"] },
+        { answer: "General Versatility", tags: ["versatile"] },
+      ],
     },
     {
-        text: 'Select your preferred intensity',
-        options: [
-            { answer: 'Mild', tags: ['mild'] },
-            { answer: 'Medium', tags: ['medium'] },
-            { answer: 'Strong', tags: ['strong'] },
-        ],
+      text: "Select your preferred intensity",
+      options: [
+        { answer: "Mild", tags: ["mild"] },
+        { answer: "Medium", tags: ["medium"] },
+        { answer: "Strong", tags: ["strong"] },
+      ],
     },
     {
-        text: 'Do you have a preference for specific regional flavors?',
-        options: [
-            { answer: 'Italian', tags: ['Italian'] },
-            { answer: 'Mediterranean', tags: ['Mediterranean'] },
-            { answer: 'Asian', tags: ['Asian'] },
-            { answer: 'Mexican', tags: ['Mexican'] },
-            { answer: 'French', tags: ['French'] },
-            { answer: 'No Specific Preference', tags: [] },
-        ],
+      text: "Do you have a preference for specific regional flavors?",
+      options: [
+        { answer: "Italian", tags: ["Italian"] },
+        { answer: "Mediterranean", tags: ["Mediterranean"] },
+        { answer: "Asian", tags: ["Asian"] },
+        { answer: "Mexican", tags: ["Mexican"] },
+        { answer: "French", tags: ["French"] },
+        { answer: "No Specific Preference", tags: [] },
+      ],
     },
-];
+  ];
 
   const handleAnswer = (selectedTags) => {
     setAnswers([...answers, ...selectedTags]);
@@ -71,15 +70,21 @@ const OOQuiz = () => {
       return acc;
     }, {});
 
-    const mostCommonTag = Object.keys(tagCounts).reduce((a, b) => (tagCounts[a] > tagCounts[b] ? a : b));
+    const mostCommonTag = Object.keys(tagCounts).reduce((a, b) =>
+      tagCounts[a] > tagCounts[b] ? a : b
+    );
 
-    const matchingOliveOils = oliveOilsData.filter(oil => oil.tags.includes(mostCommonTag));
+    const matchingOliveOils = oliveOilsData.filter((oil) =>
+      oil.tags.includes(mostCommonTag)
+    );
 
     let mostMatchingOliveOil = null;
     let mostMatches = 0;
 
-    matchingOliveOils.forEach(oil => {
-      const currentMatches = oil.tags.filter(tag => answers.includes(tag)).length;
+    matchingOliveOils.forEach((oil) => {
+      const currentMatches = oil.tags.filter((tag) =>
+        answers.includes(tag)
+      ).length;
       if (currentMatches > mostMatches) {
         mostMatchingOliveOil = oil;
         mostMatches = currentMatches;
@@ -98,11 +103,14 @@ const OOQuiz = () => {
   };
 
   return (
-    <div 
-      style={{ backgroundImage: `url(${oliveBackground})`, backgroundSize: 'cover' }} 
+    <div
+      style={{
+        backgroundImage: `url(${oliveBackground})`,
+        backgroundSize: "cover",
+      }}
       className="min-h-screen flex items-center justify-center"
     >
-      <div className="bg-white p-8 rounded-lg shadow-md flex flex-col items-center justify-center">
+      <div className="bg-white bg-opacity-90 p-8 rounded-lg shadow-md flex flex-col items-center justify-center w-full max-w-lg">
         {questionIndex < questions.length ? (
           <div>
             <h3 className="mb-4">{questions[questionIndex].text}</h3>
@@ -120,20 +128,34 @@ const OOQuiz = () => {
             </ul>
           </div>
         ) : (
-          <div>
-            <h3>Quiz Completed!</h3>
-            {result && (
-              <div>
-                <h4>Matching Olive Oils:</h4>
-                <ul>
-                  {Array.isArray(result.oliveOils) ? (
-                    result.oliveOils.map((oil, index) => (
-                      <li key={index}>{oil.name}</li>
-                    ))
-                  ) : (
-                    <li>{result.oliveOils && result.oliveOils.name}</li>
-                  )}
-                </ul>
+          <div className="text-center space-y-4">
+            <h3 className="text-xl font-semibold mb-4">Quiz Completed!</h3>
+            {result.oliveOils && (
+              <div className="space-y-4">
+                <div className="inline-block max-w-xs w-full"> {/* Constrain the size of the image */}
+                  <img
+                    src={result.oliveOils.image}
+                    alt={result.oliveOils.name}
+                    className="object-contain w-full h-auto rounded-md" // object-contain to ensure the image is contained within the div
+                  />
+                </div>
+                <h4 className="text-lg font-semibold">
+                  Recommended Olive Oil:
+                </h4>
+                <p className="font-bold">{result.oliveOils.name}</p>
+                <p>{result.oliveOils.description}</p>
+                {result.oliveOils.pairings && (
+                  <div>
+                    <h5 className="text-lg font-semibold mt-4">
+                      Pairs well with:
+                    </h5>
+                    <ul className="list-disc list-inside">
+                      {result.oliveOils.pairings.map((pairing, index) => (
+                        <li key={index}>{pairing}</li>
+                      ))}
+                    </ul>
+                  </div>
+                )}
               </div>
             )}
             <button
@@ -143,16 +165,17 @@ const OOQuiz = () => {
               Restart Quiz
             </button>
             <button
-        onClick={goToHomePage}
-        className="mt-4 bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded"
-      >
-        Back to Home Page
-      </button>
+              onClick={goToHomePage}
+              className="mt-4 bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded"
+            >
+              Back to Home Page
+            </button>
           </div>
         )}
       </div>
     </div>
   );
-};
+                      }
+  
 
-export default OOQuiz;
+export default OOQuiz

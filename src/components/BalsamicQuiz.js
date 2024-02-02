@@ -14,11 +14,26 @@ const BalsamicQuiz = () => {
   };
   const questions = [
     {
+      text: 'Would you like a red or white Balsamic?',
+      options: [
+        { answer: 'Red', tags: ['red'] },
+        { answer: 'White', tags: ['white'] }
+      ],
+    },
+    {
       text: 'Which flavor profile do you prefer for Balsamic?',
       options: [
         { answer: 'Sweet & Fruity', tags: ['sweet', 'fruity'] },
         { answer: 'Rich & Complex', tags: ['rich', 'complex'] },
         { answer: 'Tart & Tangy', tags: ['tart', 'tangy'] },
+      ],
+    },
+    {
+      text: 'Choose the intensity of the Balsamic you prefer:',
+      options: [
+        { answer: 'Mild & Delicate', tags: ['mild'] },
+        { answer: 'Medium & Balanced', tags: ['medium'] },
+        { answer: 'Bold & Strong', tags: ['bold'] }
       ],
     },
     {
@@ -35,6 +50,24 @@ const BalsamicQuiz = () => {
       options: [
         { answer: 'Traditional Italian', tags: ['Italian'] },
         { answer: 'Modern Varieties', tags: ['modern'] },
+        { answer: 'No Specific Preference', tags: [] },
+      ],
+    },
+    {
+      text: 'Do you have a preference for the age of the Balsamic?',
+      options: [
+        { answer: 'Young and Zesty', tags: ['young'] },
+        { answer: 'Aged and Mellow', tags: ['aged'] },
+        { answer: 'No Specific Preference', tags: [] },
+      ],
+    },
+    {
+      text: 'Which pairing do you prefer with Balsamic?',
+      options: [
+        { answer: 'Cheese and Fruits', tags: ['cheese', 'fruits'] },
+        { answer: 'Grilled Meats', tags: ['grilled', 'meats'] },
+        { answer: 'Vegetables and Salads', tags: ['vegetables', 'salads'] },
+        { answer: 'Desserts and Sweets', tags: ['desserts', 'sweets'] },
         { answer: 'No Specific Preference', tags: [] },
       ],
     },
@@ -82,11 +115,14 @@ const BalsamicQuiz = () => {
   };
 
   return (
-    <div 
-      style={{ backgroundImage: `url(${grapeBackground})`, backgroundSize: 'cover' }} 
+    <div
+      style={{
+        backgroundImage: `url(${grapeBackground})`,
+        backgroundSize: "cover",
+      }}
       className="min-h-screen flex items-center justify-center"
     >
-      <div className="bg-white p-8 rounded-lg shadow-md flex flex-col items-center justify-center">
+      <div className="bg-white bg-opacity-90 p-8 rounded-lg shadow-md flex flex-col items-center justify-center w-full max-w-lg">
         {questionIndex < questions.length ? (
           <div>
             <h3 className="mb-4">{questions[questionIndex].text}</h3>
@@ -95,7 +131,7 @@ const BalsamicQuiz = () => {
                 <li key={optionIndex}>
                   <button
                     onClick={() => handleAnswer(option.tags)}
-                    className="mb-2 bg-lime-500 hover:bg-lime-600 text-white px-4 py-2 rounded"
+                    className="mb-2 bg-purple-500 hover:bg-purple-600 text-white px-4 py-2 rounded"
                   >
                     {option.answer}
                   </button>
@@ -104,20 +140,34 @@ const BalsamicQuiz = () => {
             </ul>
           </div>
         ) : (
-          <div>
-            <h3>Quiz Completed!</h3>
-            {result && (
-              <div>
-                <h4>Matching Balsamics:</h4>
-                <ul>
-                  {Array.isArray(result.balsamics) ? (
-                    result.balsamics.map((balsamic, index) => (
-                      <li key={index}>{balsamic.name}</li>
-                    ))
-                  ) : (
-                    <li>{result.balsamics && result.balsamics.name}</li>
-                  )}
-                </ul>
+          <div className="text-center space-y-4">
+            <h3 className="text-xl font-semibold mb-4">Quiz Completed!</h3>
+            {result.balsamics && (
+              <div className="space-y-4">
+                <div className="inline-block max-w-xs w-full"> {/* Constrain the size of the image */}
+                  <img
+                    src={result.balsamics.image}
+                    alt={result.balsamics.name}
+                    className="object-contain w-full h-auto rounded-md" // object-contain to ensure the image is contained within the div
+                  />
+                </div>
+                <h4 className="text-lg font-semibold">
+                  Recommended Balsamic:
+                </h4>
+                <p className="font-bold">{result.balsamics.name}</p>
+                <p>{result.balsamics.description}</p>
+                {result.balsamics.pairings && (
+                  <div>
+                    <h5 className="text-lg font-semibold mt-4">
+                      Pairs well with:
+                    </h5>
+                    <ul className="list-disc list-inside">
+                      {result.balsamics.pairings.map((pairing, index) => (
+                        <li key={index}>{pairing}</li>
+                      ))}
+                    </ul>
+                  </div>
+                )}
               </div>
             )}
             <button
@@ -136,7 +186,7 @@ const BalsamicQuiz = () => {
         )}
       </div>
     </div>
-  );
+);
 };
 
 export default BalsamicQuiz;

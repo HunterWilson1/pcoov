@@ -1,7 +1,12 @@
+import tuscanHerb from '../images/tuscan-herb.jpg'
+
 export const oliveOilsData = [
     {
         name: 'Tuscan Herb',
-        tags: ['oliveOil', 'herbaceous', 'aromatic', 'dipping', 'mild', 'Italian']
+        tags: ['oliveOil', 'herbaceous', 'aromatic', 'dipping', 'mild', 'Italian'],
+        image: tuscanHerb,
+        description: 'Damn this shit good!',
+        pairings: ['Traditional aged 18 Balsamic, Sicillian Lemon, mf uhhhhhh']
     },
     {
         name: 'Garlic',

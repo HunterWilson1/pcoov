@@ -15,12 +15,22 @@ import plum from '../images/balsamics/plum.webp';
 import pomegranateq from '../images/balsamics/pomegranateq.webp';
 import raspberry from '../images/balsamics/raspberry.webp';
 import serrano from '../images/balsamics/serrano.webp';
-import slemon from '../images/balsamics/slemon.webp';
 import strawberry from '../images/balsamics/strawberry.webp';
 import suyo from '../images/balsamics/suyo.webp';
 import tarragon from '../images/balsamics/tarragon.webp';
 import up from '../images/balsamics/up.webp';
-
+import blackberry from '../images/balsamics/blackberry.webp';
+import blackcherry from '../images/balsamics/blackcherry.webp';
+import cinnamon from '../images/balsamics/cinnamon.webp';
+import darkchocolate from '../images/balsamics/darkchocolate.webp';
+import espresso from '../images/balsamics/espresso.webp';
+import fig from '../images/balsamics/fig.webp';
+import mango from '../images/balsamics/mango.webp';
+import maple from '../images/balsamics/maple.webp';
+import pomegranate from '../images/balsamics/pomegranate.webp';
+import redapple from '../images/balsamics/redapple.webp';
+import sicillianlemon from '../images/balsamics/sicillianlemon.webp';
+import vanilla from '../images/balsamics/vanilla.webp';
 
 export const balsamicData = [
     {
@@ -37,7 +47,7 @@ export const balsamicData = [
     {
         name: "Sicilian Lemon Balsamic",
         tags: ["balsamic", "tart", "citrus", "white", "marinades", "modern", "young", "mild"],
-        image: slemon,
+        image: sicillianlemon,
         description: "Playfully tart and pleasantly sweet, our Sicilian Lemon White Balsamic has perfectly balanced acidity and a crisp, lemon flavor and aroma. Fabulous with seafood, in dressings or in mixed drinks."
     },
     {
@@ -109,6 +119,7 @@ export const balsamicData = [
     {
         name: "Alfoos Mango Balsamic",
         tags: ["balsamic", "sweet", "tropical", "white", "dressing", "modern", "vegetables", "salads", "medium"],
+        image: mango,
         description: "Fantastic with shrimp, scallops, salad, and in salsas for a tropical, sweet-tart twist! The Alfoos mango cultivar is considered by many to be one of the best in terms of sweetness, richness, and flavor."
     },
     {
@@ -173,16 +184,19 @@ export const balsamicData = [
     {
         name: "Blackberry Ginger Balsamic",
         tags: ["balsamic", "spicy", "fruity", "red", "marinades", "modern", "grilled", "meats", "bold"],
+        image: blackberry,
         description: "A unique combination of juicy blackberries and fiery ginger, this balsamic is a game-changer for marinades and glazes, offering a spicy kick that is sure to delight."
     },
     {
         name: "Black Cherry Balsamic",
         tags: ["balsamic", "sweet", "fruity", "red", "desserts", "sweets", "modern", "cheese", "fruits", "bold"],
+        image: blackcherry,
         description: "Sweet, rich, and bursting with the flavor of dark cherries, this balsamic is a luxurious addition to desserts, salads, and meats, providing a deep fruitiness that enriches every bite."
     },
     {
         name: "Pomegranate Balsamic",
         tags: ["balsamic", "tart", "fruity", "red", "dressing", "salads", "modern", "vegetables", "salads", "bold"],
+        image: pomegranate,
         description: "The intense flavor of pomegranate makes this balsamic a perfect match for robust salads, meats, and cheeses, offering a tartness that elevates the dish's flavors."
     },
     {
@@ -193,36 +207,43 @@ export const balsamicData = [
     {
         name: "Mission Fig Balsamic",
         tags: ["balsamic", "sweet", "fruity", "red", "dressing", "salads", "Italian", "aged", "vegetables", "salads", "medium"],
+        image: fig,
         description: "Sweet with a hint of tartness, our Mission Fig Balsamic vinegar is a harmonious blend of ripe figs and aged balsamic. Ideal for dressing salads, drizzling over cheeses, or enhancing sauces with its rich, figgy depth."
     },
     {
         name: "Maple Balsamic",
         tags: ["balsamic", "sweet", "rich", "red", "marinades", "modern", "aged", "grilled", "meats", "bold"],
+        image: maple,
         description: "Infused with the natural sweetness of maple, this balsamic adds a warm, comforting touch to dishes. Use it as a marinade for meats, a glaze for roasted vegetables, or a drizzle over pancakes for a gourmet touch."
     },
     {
         name: "Cinnamon Pear Balsamic",
         tags: ["balsamic", "spicy", "fruity", "red", "desserts", "sweets", "Italian", "young", "cheese", "fruits", "medium"],
+        image: cinnamon,
         description: "The warm spice of cinnamon and the sweet juiciness of pears combine in this balsamic to create a flavor that's both comforting and invigorating. Perfect for autumn dishes, drizzled over desserts, or added to warm beverages."
     },
     {
         name: "Espresso Balsamic",
         tags: ["balsamic", "rich", "bold", "red", "reductions", "modern", "aged", "desserts", "sweets", "bold"],
+        image: espresso,
         description: "Rich and intense, our Espresso Balsamic captures the essence of freshly brewed espresso. Ideal for adding depth to desserts, glazes, and marinades, or for creating an extraordinary vinaigrette."
     },
     {
         name: "Red Apple Balsamic",
         tags: ["balsamic", "sweet", "fruity", "red", "dressing", "salads", "modern", "young", "vegetables", "salads", "medium"],
+        image: redapple,
         description: "Crisp and delightfully sweet, this balsamic brings the flavor of fresh red apples to your table. Excellent for dressing salads, drizzling over desserts, or adding a fresh twist to sparkling water."
     },
     {
         name: "Dark Chocolate Balsamic",
         tags: ["balsamic", "rich", "decadent", "red", "desserts", "sweets", "modern", "aged", "cheese", "fruits", "bold"],
+        image: darkchocolate,
         description: "This velvety balsamic combines the luxurious richness of dark chocolate with the tangy depth of aged balsamic. A dream for drizzling over strawberries, ice cream, or adding an unexpected twist to savory dishes."
     },
     {
         name: "Tahitian Vanilla Balsamic",
         tags: ["balsamic", "sweet", "floral", "red", "desserts", "sweets", "Italian", "young", "cheese", "fruits", "medium"],
+        image: vanilla,
         description: "Infused with the exotic flavor of Tahitian vanilla, this balsamic is a sweet, floral delight. Enhance the flavor of fresh fruits, desserts, or use it to create a memorable vinaigrette."
     },
     {

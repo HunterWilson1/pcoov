@@ -20,7 +20,7 @@ const LandingPage = () => {
 
   return (
     <div style={backgroundStyle} className="min-h-screen flex items-center justify-center bg-cover">
-      <div className="bg-white p-8 rounded-lg flex flex-col items-center justify-center shadow-md">
+      <div className="bg-white bg-opacity-90 p-8 rounded-lg flex flex-col items-center justify-center shadow-md">
         <h1 className="text-black text-2xl mb-4">
           Find your Olive Oil or Vinegar
         </h1>

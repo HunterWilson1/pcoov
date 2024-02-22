@@ -17,11 +17,15 @@ const OOQuiz = () => {
     {
       text: "Which flavor profile do you prefer?",
       options: [
-        { answer: "Herbaceous & Aromatic", tags: ["herbaceous", "aromatic"] },
-        { answer: "Citrus & Zesty", tags: ["citrus", "zesty"] },
-        { answer: "Earthy & Savory", tags: ["earthy", "savory"] },
-        { answer: "Spicy & Bold", tags: ["spicy", "bold"] },
-        { answer: "Rich & Smooth", tags: ["rich", "smooth"] },
+        { answer: "Herbaceous", tags: ["herbaceous"] },
+        { answer: "Citrus", tags: ["citrus"] },
+        { answer: "Earthy", tags: ["earthy"] },
+        { answer: "Spicy", tags: ["spicy"] },
+        { answer: "Smooth", tags: ["smooth"] },
+        { answer: "Zesty", tags: ["zesty"] },
+        { answer: "Savory", tags: ["savory"] },
+        { answer: "Smoky", tags: ["smoky"] },
+        { answer: "Bold", tags: ["bold"] },
       ],
     },
     {
@@ -29,7 +33,8 @@ const OOQuiz = () => {
       options: [
         { answer: "Cooking", tags: ["cooking"] },
         { answer: "Dressing Salads", tags: ["dressing", "salads"] },
-        { answer: "Dipping & Marinades", tags: ["dipping", "marinades"] },
+        { answer: "Dipping", tags: ["dipping"] },
+        { answer: "Marinades", tags: ["marinades"] },
         { answer: "Baking", tags: ["baking"] },
         { answer: "General Versatility", tags: ["versatile"] },
       ],
@@ -50,7 +55,7 @@ const OOQuiz = () => {
         { answer: "Asian", tags: ["Asian"] },
         { answer: "Mexican", tags: ["Mexican"] },
         { answer: "French", tags: ["French"] },
-        { answer: "No Specific Preference", tags: [] },
+        { answer: "No Specific Preference", tags: ["general"] },
       ],
     },
   ];
@@ -102,15 +107,25 @@ const OOQuiz = () => {
     setResult(null);
   };
 
+  const containerStyle = {
+    maxWidth: '600px', // Set a max width for larger screens
+    width: '90%', // Use a percentage for smaller screens to keep it responsive
+    height: 'auto', // Adjust height automatically based on content
+    minHeight: '500px', // Minimum height to keep a decent size on all devices
+  };
+
+  const backgroundStyle = {
+    backgroundImage: `url(${oliveBackground})`,
+    backgroundSize: 'cover',
+    backgroundPosition: 'center',
+  }
+
   return (
     <div
-      style={{
-        backgroundImage: `url(${oliveBackground})`,
-        backgroundSize: "cover",
-      }}
+      style={backgroundStyle}
       className="min-h-screen flex items-center justify-center"
     >
-      <div className="bg-white bg-opacity-90 p-8 rounded-lg shadow-md flex flex-col items-center justify-center w-full max-w-lg">
+      <div style={containerStyle} className="bg-white bg-opacity-90 p-8 rounded-lg shadow-md flex flex-col items-center justify-center w-full max-w-lg">
         {questionIndex < questions.length ? (
           <div>
             <h3 className="mb-4">{questions[questionIndex].text}</h3>
@@ -132,7 +147,9 @@ const OOQuiz = () => {
             <h3 className="text-xl font-semibold mb-4">Quiz Completed!</h3>
             {result.oliveOils && (
               <div className="space-y-4">
-                <div className="inline-block max-w-xs w-full"> {/* Constrain the size of the image */}
+                <div className="inline-block max-w-xs w-full">
+                  {" "}
+                  {/* Constrain the size of the image */}
                   <img
                     src={result.oliveOils.image}
                     alt={result.oliveOils.name}
@@ -175,7 +192,6 @@ const OOQuiz = () => {
       </div>
     </div>
   );
-                      }
-  
+};
 
-export default OOQuiz
+export default OOQuiz;

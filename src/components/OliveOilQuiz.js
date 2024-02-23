@@ -101,12 +101,6 @@ const OOQuiz = () => {
     });
   };
 
-  const resetQuiz = () => {
-    setAnswers([]);
-    setQuestionIndex(0);
-    setResult(null);
-  };
-
   const containerStyle = {
     maxWidth: "600px", // Set a max width for larger screens
     width: "90%", // Use a percentage for smaller screens to keep it responsive
@@ -179,16 +173,10 @@ const OOQuiz = () => {
               </div>
             )}
             <button
-              onClick={resetQuiz}
-              className="mt-4 bg-lime-500 hover:bg-lime-600 text-white px-4 py-2 rounded"
-            >
-              Restart Quiz
-            </button>
-            <button
               onClick={goToHomePage}
-              className="mt-4 bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded"
+              className="mt-4 bg-red-500 hover:bg-red-600 text-white px-4 py-2 rounded flex items-center"
             >
-              Back to Home Page
+              ← Back to Home
             </button>
           </div>
         )}

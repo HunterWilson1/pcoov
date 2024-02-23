@@ -9,6 +9,18 @@ import gochujang from '../images/oliveoils/goghujang.webp';
 import lemon from '../images/oliveoils/lemon.webp';
 import navelOrange from '../images/oliveoils/navelorange.webp';
 import persianLime from '../images/oliveoils/persianlime.webp';
+import basil from '../images/oliveoils/basil.webp';
+import fernleafdill from '../images/oliveoils/fernleafdill.webp';
+import gingergarlic from '../images/oliveoils/gingergarlic.webp';
+import greekthyme from '../images/oliveoils/greekthyme.webp';
+import harissa from '../images/oliveoils/harissa.webp';
+import herbdep from '../images/oliveoils/herbdep.webp';
+import jalapeno from '../images/oliveoils/jalapeno.webp';
+import milanese from '../images/oliveoils/milanese.webp';
+import oregano from '../images/oliveoils/oregano.webp';
+import spicypesto from '../images/oliveoils/spicypesto.webp';
+import wildmushroom from '../images/oliveoils/wildmushroom.webp';
+import peppercorn from '../images/oliveoils/peppercorn.webp';
 
 export const oliveOilsData = [
     {
@@ -81,61 +93,73 @@ export const oliveOilsData = [
     {
         name: 'Jalapeno',
         tags: ['oliveOil', 'spicy', 'marinades', 'medium', 'Mexican'],
+        image: jalapeno,
         description: "Our South Australian Jalapeno Fused Olive Oil is both fruity and spicy. It's made by combining fresh green, early harvest Frantoio olives with a large portion of FRESH jalapeno peppers! At harvest we used double the volume of peppers than we traditionally do to maximize the flavor. These two fresh ingredients are simply crushed together and mixed in a malaxer which releases and combines the green essential oil of the fresh peppers with the olive oil. The resulting marriage boasts lingering spiciness, slightly bitter pleasing green vegetal notes and vibrant zing from capsaicin",
     },
     {
         name: 'Harissa',
         tags: ['oliveOil', 'spicy', 'cooking', 'strong', 'Mediterranean'],
+        image: harissa,
         description: "Most popular in North Africa and the Middle East, Harissa is made with chili pepper (often smoked), garlic, caraway, coriander, and cumin, these spices are pounded into a paste and left overnight to develop its flavors. We've added more pepper by popular demand, making it our hottest infused olive oil on the floor.",
     },
     {
         name: 'Madagascar Black Peppercorn',
         tags: ['oliveOil', 'bold', 'cooking', 'strong', 'general'],
+        image: peppercorn,
         description: "Spicy and floral with notes of fresh, fround peppercorn and lingering, tingly Szechuan peppercorn finish. Great for marinades, dressings, aioli, sauteing and over ice cream. Try it in a cream based dish, or in a salad for a creamy nice peppery zing. Amazing on popcorn, with creamy pasta and seafood. Add this amazing peppercorn flavor in your favorite dishes without having to use fresh peppercorns!",
     },
     {
         name: 'Herbs De Provence',
         tags: ['oliveOil', 'herbaceous', 'cooking', 'mild', 'French'],
+        image: herbdep,
         description: "With top notes of savory thyme and bay leaf, this is a show stopper when drizzled over grilled chicken, rubbed on turkey before roasting, and grilling vegetables. Great for dipping various breads, just add fresh crack pepper and grated cheese!",
     },
     {
         name: 'Milanese Gremolata',
         tags: ['oliveOil', 'zesty', 'marinades', 'mild', 'Italian'],
+        image: milanese,
         description: "Gremolata is a traditional Italian herb condiment consisting of fresh lemon zest, minced garlic Italian flat leafy parsley & a hint of mint. The herbs and citrus zest are typically crushed together in a mortar to release their pungent essential oils. Try finishing your fish with this exciting flavor combination. It is also traditionally served with osso buco, veal & other slow braised dishes to add a zip of flavor. We also recommend our Gremolata for marinating poultry and in dressings.",
     },
     {
         name: 'Spicy Calabrian Pesto',
         tags: ['oliveOil', 'spicy', 'cooking', 'medium', 'Italian'],
+        image: spicypesto,
         description: "Take a sensory trip to sunbaked Coastal Reggio Calabria, where the spicy Calabrian chilies, sweet basil, pungent purple heirloom garlic, and piquant Pecorino are produced in the rich Mediterranean soil. We artfully bring these iconic flavors of Italy together for you in our rich, savory Calabrian Pesto Olive Oil. Use to roast vegetables, in aioli, with potatoes, eggs, in salads, with pasta, to marinate poultry, over risotto, grilled meat, grain bowls, as a bread dipper, or to make a fabulous garlic bread. The possibilities are endless.",
     },
     {
         name: 'Oregano',
         tags: ['oliveOil', 'earthy', 'cooking', 'medium', 'Mediterranean'],
+        image: oregano,
         description: "Made with fresh oregano curshed with early harvest, fresh picked Greek olives, using 100% Mechanical cold extraction methods. Fresh, bright, and herbaceous. This is by far one of the most difficult flavors to transalte into an oil because the essential oil of oregano rarely if ever tastes like the fresh herb, whereas this cold pressed agrumato oregano is spot on. We are amazed how beautiful this oil turned out. Pulls out the earthy and delicate flavors of the oregano creating an amazing fused oil. Fantastic anywhere you'd like the fresh, herbaceous flavors or oregano. Use in marinades, salad, for bread dipping, and brushed on vegetables, with poultry and more.",
     },
     {
         name: 'Basil',
         tags: ['oliveOil', 'fresh', 'salads', 'dressing', 'mild', 'Italian'],
+        image: basil,
         description: "Fresh, bright, and herbaceous. This amazing infusion is made from Certified Ultra-Premium Olive Oil infused with essential basil oil. Fantastic anywhere you'd like fresh, herbaceous flavor of basil. Use in marinades, salads, for bread dipping, brushed on vegetables, with poultry, and more. Try it on a summer salad or caprese and let your taste buds travel to the shores of Mediterranean.",
     },
     {
         name: 'Wild Mushroom and Sage',
         tags: ['oliveOil', 'savory', 'cooking', 'medium', 'general'],
+        image: wildmushroom,
         description: "Made with UP Certified Extra Virgin Olive oil, our Mushroom and Sage Olive Oil contains a delicious combination of fresh, herbaceous sage combined with an array of wild mushrooms including Cremini, Shitake, Porcini. The result is a rich, savory experience that can be used in many culinary applications. Try drizzled over cream of mushroom soup, on risotto, roasted potatoes, with chicken and all types of poultry, in stuffing, croutons, on pasta, with grilled or roasted vegetables, sprayed on popcorn with a sprinkle of sea salt and cracked, in aioli, cream sauces and much more.",
     },
     {
         name: 'Wild Fernleaf Dill',
         tags: ["oliveOil", "herbaceous", "dipping", "marinades", "mild", "Mediterranean"],
+        image: fernleafdill,
         description: "Made with UP Certified Extra Virgin Olive Oil, highly aromatic, vibrant infused olive oil is a must-have mediterranean culinary staple. We recommend using it in dressings, marinades, with cucumbers chopped salads, drizzled over spinach, fish, green beans, poultry, meat, in soups, egg dishes, creamy sauces, aioli or olive oil based mayonnaise, for making tartar sauces, roasted vegetables, braised white beans, or baking delectable herb breads and rolls. All natural, no artificial flavors/additional ingredients",
     },
     {
         name: 'Ginger and Black Garlic',
         tags: ['oliveOil', 'bold', 'cooking', 'medium', 'Asian'],
+        image: gingergarlic,
         description: "Made with Certified Ultra Premium Extra Virgin Olive Oil, Our Ginger & Black Garlic Infused Olive Oil is out of this World! Earthy savory, and sweet, it great for marinades, bread dipping, incorporating into dressings, finishing chicken or fish off the grill, stir fries, sauces, and more!",
     },
     {
         name: 'Greek Thyme',
         tags: ['oliveOil', 'savory', 'marinades', 'medium', 'Mediterranean'],
+        image: greekthyme,
         description: "Our Greek thyme fused olive oil is made by combining early green Koroneiki olives with fresh cut thyme. Perfect as a finisher, drizzled on chicken noodle soup and pairs with peach white balsamic or combined with pomegranate dark balsamic for roasting lamb. Spectacular for caramelizing onions over low heat",
     },
 ];

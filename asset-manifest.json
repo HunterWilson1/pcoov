@@ -1,7 +1,7 @@
 {
   "files": {
-    "main.css": "/pcoov/static/css/main.c30fc9cd.css",
-    "main.js": "/pcoov/static/js/main.8e5e18f5.js",
+    "main.css": "/pcoov/static/css/main.33039c8f.css",
+    "main.js": "/pcoov/static/js/main.ea6f3969.js",
     "static/media/tuscan-herb.jpg": "/pcoov/static/media/tuscan-herb.d8a3658641e827c6e821.jpg",
     "static/media/olive.png": "/pcoov/static/media/olive.d6abb0afd6e0deb4f6f7.png",
     "static/media/suyo.webp": "/pcoov/static/media/suyo.354803008c3aaf5d117f.webp",
@@ -49,11 +49,11 @@
     "static/media/plum.webp": "/pcoov/static/media/plum.f2078e9026f4103829ca.webp",
     "static/media/grape.webp": "/pcoov/static/media/grape.d2cf084273938e95fc75.webp",
     "index.html": "/pcoov/index.html",
-    "main.c30fc9cd.css.map": "/pcoov/static/css/main.c30fc9cd.css.map",
-    "main.8e5e18f5.js.map": "/pcoov/static/js/main.8e5e18f5.js.map"
+    "main.33039c8f.css.map": "/pcoov/static/css/main.33039c8f.css.map",
+    "main.ea6f3969.js.map": "/pcoov/static/js/main.ea6f3969.js.map"
   },
   "entrypoints": [
-    "static/css/main.c30fc9cd.css",
-    "static/js/main.8e5e18f5.js"
+    "static/css/main.33039c8f.css",
+    "static/js/main.ea6f3969.js"
   ]
 }

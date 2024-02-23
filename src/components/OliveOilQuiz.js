@@ -108,39 +108,42 @@ const OOQuiz = () => {
   };
 
   const containerStyle = {
-    maxWidth: '600px', // Set a max width for larger screens
-    width: '90%', // Use a percentage for smaller screens to keep it responsive
-    height: 'auto', // Adjust height automatically based on content
-    minHeight: '500px', // Minimum height to keep a decent size on all devices
+    maxWidth: "600px", // Set a max width for larger screens
+    width: "90%", // Use a percentage for smaller screens to keep it responsive
+    height: "auto", // Adjust height automatically based on content
+    minHeight: "500px", // Minimum height to keep a decent size on all devices
   };
 
   const backgroundStyle = {
     backgroundImage: `url(${oliveBackground})`,
-    backgroundSize: 'cover',
-    backgroundPosition: 'center',
-  }
+    backgroundSize: "cover",
+    backgroundPosition: "center",
+  };
 
   return (
     <div
       style={backgroundStyle}
       className="min-h-screen flex items-center justify-center"
     >
-      <div style={containerStyle} className="bg-white bg-opacity-90 p-8 rounded-lg shadow-md flex flex-col items-center justify-center w-full max-w-lg">
+      <div
+        style={containerStyle}
+        className="bg-white bg-opacity-90 p-8 rounded-lg shadow-md flex flex-col items-center justify-center w-full max-w-lg"
+      >
         {questionIndex < questions.length ? (
           <div>
             <h3 className="mb-4">{questions[questionIndex].text}</h3>
-            <ul>
+            {/* Use grid layout for buttons */}
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               {questions[questionIndex].options.map((option, optionIndex) => (
-                <li key={optionIndex}>
-                  <button
-                    onClick={() => handleAnswer(option.tags)}
-                    className="mb-2 bg-lime-500 hover:bg-lime-600 text-white px-4 py-2 rounded"
-                  >
-                    {option.answer}
-                  </button>
-                </li>
+                <button
+                  key={optionIndex}
+                  onClick={() => handleAnswer(option.tags)}
+                  className="mt-4 bg-lime-500 hover:bg-lime-600 text-white px-4 py-2 rounded"
+                >
+                  {option.answer}
+                </button>
               ))}
-            </ul>
+            </div>
           </div>
         ) : (
           <div className="text-center space-y-4">

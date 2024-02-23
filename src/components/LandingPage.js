@@ -30,11 +30,11 @@ const LandingPage = () => {
   return (
     <div style={backgroundStyle} className="min-h-screen flex items-center justify-center">
       <div style={containerStyle} className="bg-white bg-opacity-90 p-8 rounded-lg flex flex-col items-center justify-center shadow-md">
-        <h1 className="text-black text-2xl mb-4">Find Your Olive Oil or Vinegar</h1>
-        <p className="text-justify mb-4">
+        <h1 className="text-black text-2xl mb-4 font-bold text-center">Find Your Olive Oil or Vinegar</h1>
+        <p className="text-center mb-4">
           Welcome to Pass Christian Olive Oil & Vinegar, your culinary guide to finding the perfect olive oil and vinegar amidst a sea of choices. Our mission is to simplify your journey through our extensive collection, offering personalized recommendations that cater to your taste preferences and cooking needs. Whether you're a seasoned chef or a curious food enthusiast, our platform is designed to help you navigate the diverse world of flavors with ease, ensuring a delightful experience as you discover the ideal products to elevate your culinary creations. Explore with us and transform your cooking into an adventure of taste.
         </p>
-        <h2>
+        <h2 className='pb-2 text-center font-bold'>
           This will switch between the Olive Oil quiz and the Balsamic quiz
         </h2>
         <div className="toggle-switch">

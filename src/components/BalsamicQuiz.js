@@ -114,15 +114,27 @@ const BalsamicQuiz = () => {
     setResult(null);
   };
 
+  const containerStyle = {
+    maxWidth: "600px", // Set a max width for larger screens
+    width: "90%", // Use a percentage for smaller screens to keep it responsive
+    height: "auto", // Adjust height automatically based on content
+    minHeight: "500px", // Minimum height to keep a decent size on all devices
+  };
+
+  const backgroundStyle = {
+    backgroundImage: `url(${grapeBackground})`,
+    backgroundSize: "cover",
+    backgroundPosition: "center",
+  };
+
   return (
     <div
-      style={{
-        backgroundImage: `url(${grapeBackground})`,
-        backgroundSize: "cover",
-      }}
+      style={backgroundStyle}
       className="min-h-screen flex items-center justify-center"
     >
-      <div className="bg-white bg-opacity-90 p-8 rounded-lg shadow-md flex flex-col items-center justify-center w-full max-w-lg">
+      <div 
+      style={containerStyle}
+      className="bg-white bg-opacity-90 p-8 rounded-lg shadow-md flex flex-col items-center justify-center w-full max-w-lg">
         {questionIndex < questions.length ? (
           <div>
             <h3 className="mb-4">{questions[questionIndex].text}</h3>

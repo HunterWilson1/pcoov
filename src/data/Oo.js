@@ -162,4 +162,28 @@ export const oliveOilsData = [
         image: greekthyme,
         description: "Our Greek thyme fused olive oil is made by combining early green Koroneiki olives with fresh cut thyme. Perfect as a finisher, drizzled on chicken noodle soup and pairs with peach white balsamic or combined with pomegranate dark balsamic for roasting lamb. Spectacular for caramelizing onions over low heat",
     },
+    {
+        name: 'Dark Toasted Sesame Oil',
+        tags: ['oliveOil', ],
+        image: '',
+        description: "",
+    },
+    {
+        name: 'All Natural White Truffle Oil',
+        tags: ['oliveOil', ],
+        image: '',
+        description: "",
+    },
+    {
+        name: 'All Natural Black Truffle Oil',
+        tags: ['oliveOil', ],
+        image: '',
+        description: '',
+    },
+    {
+        name: 'Toasted Walnut Oil',
+        tags: ['oliveOil', ],
+        image: '',
+        description: '',
+    }
 ];

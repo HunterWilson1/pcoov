@@ -37,11 +37,13 @@ export const balsamicData = [
         name: "Elderflower Balsamic",
         tags: ["balsamic", "sweet", "floral", "white", "desserts", "Italian", "young", "mild"],
         image: elderflower,
-        description: "This delicate Elderflower white Balsamic Vinegar, is both crispy and juicy with an intensely floral aroma of honeysuckle flowers. We have married the lovely floral characteristics of this cream-colored flower heads with our Ultra Premium White Condimento. The resulting collaboration is an intoxicating burst of unique flavor; bright, clean, and absolutely delicious! Great with seafood, grilled chicken/poultry, pork, in sparkling water as a spritzer, in cocktails, ice teas, as a glaze, in marinades and dressings."
+        description: "This delicate Elderflower white Balsamic Vinegar, is both crispy and juicy with an intensely floral aroma of honeysuckle flowers. We have married the lovely floral characteristics of this cream-colored flower heads with our Ultra Premium White Condimento. The resulting collaboration is an intoxicating burst of unique flavor; bright, clean, and absolutely delicious! Great with seafood, grilled chicken/poultry, pork, in sparkling water as a spritzer, in cocktails, ice teas, as a glaze, in marinades and dressings.",
+        pairings: [''],
     },
     {
         name: "Blenheim Apricot Balsamic",
         tags: ["balsamic", "sweet", "fruity", "white", "dressing", "Italian", "young", "medium"],
+        image: '',
         description: "The Blenheim variety is both sweet and tart with an intensely aromatic aroma of honeysuckle and picked with a faint green tinge. We married this with our aged white balsamic condimento. The resulting collaboration, is intoxicating as it is crisp and tart. Great with grilled chicken, as a glaze or served with cheese."
     },
     {
@@ -275,5 +277,25 @@ export const balsamicData = [
         name: "Denissimo Balsamic",
         tags: ["balsamic", "rich", "decadent", "red", "reductions", "modern", "aged", "desserts", "sweets", "bold"],
         description: "The pinnacle of our balsamic collection, Denissimo is crafted for those who demand the very best. Its rich, decadent flavor is ideal for finishing dishes, from meats to desserts, adding a note of luxury."
+    },
+    {
+        name: "Raw Unfiltered Apple Cider Vinegar",
+        tags: ["balsamic", "wine", "tart", "tangy", "dressing", "salads", "modern", "young"],
+        description: "",
+    },
+    {
+        name: "Red Wine Vinegar",
+        tags: ["balsamic", "wine",  "rich", "complex", "marinades", "Italian", "medium", "grilled", "meats"],
+        description: "",
+    },
+    {
+        name: "Champagne Vinegar",
+        tags: ["balsamic", "wine", "mild", "delicate", "dressing", "salads", "modern", "young", "vegetables", "salads"],
+        description: "",
+    },
+    {
+        name: "Sherry Wine Vinegar",
+        tags: ["balsamic", "wine", "rich", "complex", "reductions", "Spanish", "aged", "cheese", "fruits"],
+        description: "",
     }
     ];

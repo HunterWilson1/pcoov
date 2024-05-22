@@ -9,7 +9,7 @@ const BalsamicQuiz = () => {
       options: [
         { answer: "Red", tags: ["red"] },
         { answer: "White", tags: ["white"] },
-        { answer: "Wine", tags: ["wine"] }
+        { answer: "Wine", tags: ["wine"] },
       ],
     },
     {
@@ -64,7 +64,7 @@ const BalsamicQuiz = () => {
       ],
     },
   ];
-  
+
   // Initialize state
   const [answers, setAnswers] = useState([]);
   const [balsamicData, setBalsamicData] = useState([]);
@@ -83,25 +83,28 @@ const BalsamicQuiz = () => {
     setLoading(true);
 
     // Fetch data
-    fetch('https://hunterwilson1.github.io/VF-API/data/balsamics.json')
-      .then(response => {
-        if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
-        return response.json();
-      })
-      .then(data => {
-        if (data && data.balsamics) {
-          setBalsamicData(data.balsamics);
-          setLoading(false);
-        } else {
-          throw new Error('No valid data found');
-        }
-      })
-      .catch(error => {
-        console.error('Failed to fetch balsamics:', error);
-        setError(true);
-        setLoading(false);
-      });
-  }, []);
+    fetch("https://hunterwilson1.github.io/VF-API/data/balsamics.json")
+    .then((response) => {
+      if (!response.ok) {
+        throw new Error(`HTTP error! status: ${response.status}`);
+      }
+      return response.json();
+    })
+    .then((data) => {
+      if (data && data.balsamics) {
+        setBalsamicData(data.balsamics);
+      } else {
+        throw new Error("No valid data found");
+      }
+    })
+    .catch((error) => {
+      console.error("Failed to fetch balsamics:", error);
+      setError(true);
+    })
+    .finally(() => {
+      setLoading(false);
+    });
+}, []);
 
   const goToHomePage = () => {
     navigate("/");
@@ -110,74 +113,77 @@ const BalsamicQuiz = () => {
   const handleAnswer = (selectedTags) => {
     const updatedAnswers = [...answers, ...selectedTags];
     setAnswers(updatedAnswers);
-    console.log("Updated Answers:", updatedAnswers);  // Debugging log
+    console.log("Updated Answers:", updatedAnswers); // Debugging log
 
     if (questionIndex + 1 === questions.length) {
       calculateResult(updatedAnswers);
-      setQuestionIndex(questionIndex + 1);  // Move to the results screen
+      setQuestionIndex(questionIndex + 1); // Move to the results screen
     } else {
-      setQuestionIndex(questionIndex + 1);  // Go to next question
+      setQuestionIndex(questionIndex + 1); // Go to next question
     }
   };
 
   const calculateResult = (finalTags) => {
     if (!balsamicData || balsamicData.length === 0) {
-        console.error("Balsamic data is not loaded yet or is empty.");
-        return; // Ensure data is available
+      console.error("Balsamic data is not loaded yet or is empty.");
+      return; // Ensure data is available
     }
 
-    console.log("Calculating results for tags:", finalTags);  // Log the final tags used for calculation
+    console.log("Calculating results for tags:", finalTags); // Log the final tags used for calculation
 
     // Start with all balsamics and narrow down
     let possibleMatches = balsamicData;
 
     // Apply a must-match filter for critical types like 'red', 'white', 'wine'
-    const criticalTags = ['red', 'white', 'wine'];
-    const criticalUserTags = finalTags.filter(tag => criticalTags.includes(tag));
+    const criticalTags = ["red", "white", "wine"];
+    const criticalUserTags = finalTags.filter((tag) =>
+      criticalTags.includes(tag)
+    );
 
     if (criticalUserTags.length > 0) {
-        possibleMatches = possibleMatches.filter(balsamic => 
-            criticalUserTags.every(ctag => balsamic.tags.includes(ctag))
-        );
+      possibleMatches = possibleMatches.filter((balsamic) =>
+        criticalUserTags.every((ctag) => balsamic.tags.includes(ctag))
+      );
     }
 
     // If there are still too many options, try to match additional tags
-    if (possibleMatches.length > 1 && finalTags.length > criticalUserTags.length) {
-        const secondaryTags = finalTags.filter(tag => !criticalTags.includes(tag));
-        let secondaryMatches = possibleMatches.filter(balsamic => 
-            secondaryTags.some(stag => balsamic.tags.includes(stag))
-        );
+    if (
+      possibleMatches.length > 1 &&
+      finalTags.length > criticalUserTags.length
+    ) {
+      const secondaryTags = finalTags.filter(
+        (tag) => !criticalTags.includes(tag)
+      );
+      let secondaryMatches = possibleMatches.filter((balsamic) =>
+        secondaryTags.some((stag) => balsamic.tags.includes(stag))
+      );
 
-        if (secondaryMatches.length > 0) {
-            possibleMatches = secondaryMatches;
-        }
+      if (secondaryMatches.length > 0) {
+        possibleMatches = secondaryMatches;
+      }
     }
 
     // Select the best match or report no matches
     if (possibleMatches.length > 0) {
-        setResult(possibleMatches[0]); // You can choose to refine how you pick the best match
-        console.log("Best Match:", possibleMatches[0].name);  // Log the best match found
+      setResult(possibleMatches[0]); // You can choose to refine how you pick the best match
+      console.log("Best Match:", possibleMatches[0].name); // Log the best match found
     } else {
-        console.log("No matching balsamic found.");
-        setResult(null);
+      console.log("No matching balsamic found.");
+      setResult(null);
     }
-};
-
-
+  };
 
   // Debug to check state values
   console.log({
     questionIndex,
     questionsLength: questions.length,
-    result
+    result,
   });
 
   // Render logic
   if (loading) return <div>Loading...</div>;
   if (error) return <div>Error loading the quiz.</div>;
-  
 
-  
   const containerStyle = {
     maxWidth: "600px", // Set a max width for larger screens
     width: "90%", // Use a percentage for smaller screens to keep it responsive
@@ -191,10 +197,15 @@ const BalsamicQuiz = () => {
     backgroundPosition: "center",
   };
 
-
   return (
-    <div style={backgroundStyle} className="min-h-screen flex items-center justify-center">
-      <div style={containerStyle} className="bg-white bg-opacity-90 p-8 rounded-lg shadow-md flex flex-col items-center justify-center w-full max-w-lg">
+    <div
+      style={backgroundStyle}
+      className="min-h-screen flex items-center justify-center"
+    >
+      <div
+        style={containerStyle}
+        className="bg-white bg-opacity-90 p-8 rounded-lg shadow-md flex flex-col items-center justify-center w-full max-w-lg"
+      >
         {questionIndex < questions.length ? (
           <div>
             <h3 className="mb-4">{questions[questionIndex].text}</h3>
@@ -214,13 +225,17 @@ const BalsamicQuiz = () => {
           <div className="text-center space-y-4">
             <h3 className="text-xl font-semibold mb-4">Quiz Completed!</h3>
             <div className="space-y-4">
-              <img src={result.image} alt={result.name} className="object-contain w-full h-auto rounded-md" />
+            {result.image && (
+              <img src={result.image} alt={result.name} className="w-full h-auto rounded-md object-contain" />
+            )}
               <h4 className="text-lg font-semibold">Recommended Balsamic:</h4>
               <p className="font-bold">{result.name}</p>
               <p>{result.description}</p>
               {result.pairings && (
                 <div>
-                  <h5 className="text-lg font-semibold mt-4">Pairs well with:</h5>
+                  <h5 className="text-lg font-semibold mt-4">
+                    Pairs well with:
+                  </h5>
                   <ul className="list-disc list-inside">
                     {result.pairings.map((pairing, index) => (
                       <li key={index}>{pairing}</li>
@@ -229,9 +244,6 @@ const BalsamicQuiz = () => {
                 </div>
               )}
             </div>
-            <button onClick={goToHomePage} className="mt-4 bg-red-500 hover:bg-red-600 text-white px-4 py-2 rounded flex items-center">
-              ← Back to Home
-            </button>
           </div>
         ) : (
           <div>No results found.</div>
@@ -240,6 +252,5 @@ const BalsamicQuiz = () => {
     </div>
   );
 };
-
 
 export default BalsamicQuiz;

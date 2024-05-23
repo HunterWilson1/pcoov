@@ -1,18 +1,7 @@
 import React, { useState } from "react";
-import { oliveOilsData } from "../data/Oo";
 import { useNavigate } from "react-router-dom";
-import oliveBackground from "../images/olive.png";
 
-const OOQuiz = () => {
-  const [answers, setAnswers] = useState([]);
-  const [questionIndex, setQuestionIndex] = useState(0);
-  const [result, setResult] = useState(null);
-  const navigate = useNavigate();
-
-  const goToHomePage = () => {
-    navigate("/");
-  };
-
+const OliveOilQuiz = () => {
   const questions = [
     {
       text: "Which flavor profile do you prefer?",
@@ -60,56 +49,104 @@ const OOQuiz = () => {
     },
   ];
 
-  const handleAnswer = (selectedTags) => {
-    setAnswers([...answers, ...selectedTags]);
-    setQuestionIndex(questionIndex + 1);
+  const [answers, setAnswers] = useState([]);
+  const [oliveOilData, setOliveOilData] = useState([]);
+  const [questionIndex, setQuestionIndex] = useState(0);
+  const [result, setResult] = useState(null);
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState(null);
+  const navigate = useNavigate();
 
-    if (questionIndex === questions.length - 1) {
-      calculateResult();
+  const goToHomePage = () => {
+    navigate("/");
+  };
+
+  const handleAnswer = (selectedTags) => {
+    const updatedAnswers = [...answers, ...selectedTags];
+    setAnswers(updatedAnswers);
+    console.log("Updated Answers:", updatedAnswers); // Debugging log
+
+    if (questionIndex + 1 === questions.length) {
+      // All questions answered, fetch data and calculate result
+      setLoading(true);
+      fetchDataAndCalculateResult(updatedAnswers);
+    } else {
+      setQuestionIndex(questionIndex + 1); // Go to next question
     }
   };
 
-  const calculateResult = () => {
-    const tagCounts = answers.reduce((acc, tag) => {
-      acc[tag] = (acc[tag] || 0) + 1;
-      return acc;
-    }, {});
+  const fetchDataAndCalculateResult = (finalTags) => {
+    fetch("http://localhost:3001/api/olive_oils")
+      .then((response) => {
+        if (!response.ok) {
+          throw new Error(`HTTP error! status: ${response.status}`);
+        }
+        return response.json();
+      })
+      .then((data) => {
+        console.log("Fetched olive oil data:", data); // Debugging log
+        if (data && Array.isArray(data) && data.length > 0) {
+          setOliveOilData(data);
+          calculateResult(finalTags, data);
+        } else {
+          throw new Error("No valid data found");
+        }
+      })
+      .catch((error) => {
+        console.error("Failed to fetch olive oils:", error);
+        setError(error.message);
+        setLoading(false);
+      });
+  };
 
-    const mostCommonTag = Object.keys(tagCounts).reduce((a, b) =>
-      tagCounts[a] > tagCounts[b] ? a : b
-    );
+  const calculateResult = (finalTags, oliveOilData) => {
+    console.log("Calculating results for tags:", finalTags); // Log the final tags used for calculation
 
-    const matchingOliveOils = oliveOilsData.filter((oil) =>
-      oil.tags.includes(mostCommonTag)
-    );
+    // Function to calculate the number of matching tags
+    const getMatchScore = (oilTags) => {
+      return oilTags.reduce((score, tag) => (finalTags.includes(tag) ? score + 1 : score), 0);
+    };
 
-    let mostMatchingOliveOil = null;
-    let mostMatches = 0;
+    // Find the olive oil with the highest match score
+    let bestMatch = null;
+    let highestScore = 0;
 
-    matchingOliveOils.forEach((oil) => {
-      const currentMatches = oil.tags.filter((tag) =>
-        answers.includes(tag)
-      ).length;
-      if (currentMatches > mostMatches) {
-        mostMatchingOliveOil = oil;
-        mostMatches = currentMatches;
+    oliveOilData.forEach((oil) => {
+      const matchScore = getMatchScore(oil.tags);
+      if (matchScore > highestScore) {
+        bestMatch = oil;
+        highestScore = matchScore;
       }
     });
 
-    setResult({
-      oliveOils: mostMatchingOliveOil,
-    });
+    if (bestMatch) {
+      setResult(bestMatch);
+      console.log("Best Match:", bestMatch.name); // Log the best match found
+    } else {
+      console.log("No matching olive oil found.");
+      setResult(null);
+    }
+    setLoading(false);
   };
 
+  // Debug to check state values
+  console.log({
+    questionIndex,
+    questionsLength: questions.length,
+    result,
+    loading,
+    error,
+  });
+
   const containerStyle = {
-    maxWidth: "600px", // Set a max width for larger screens
-    width: "90%", // Use a percentage for smaller screens to keep it responsive
-    height: "auto", // Adjust height automatically based on content
-    minHeight: "500px", // Minimum height to keep a decent size on all devices
+    maxWidth: "600px",
+    width: "90%",
+    height: "auto",
+    minHeight: "500px",
   };
 
   const backgroundStyle = {
-    backgroundImage: `url(${oliveBackground})`,
+
     backgroundSize: "cover",
     backgroundPosition: "center",
   };
@@ -126,52 +163,47 @@ const OOQuiz = () => {
         {questionIndex < questions.length ? (
           <div>
             <h3 className="mb-4">{questions[questionIndex].text}</h3>
-            {/* Use grid layout for buttons */}
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               {questions[questionIndex].options.map((option, optionIndex) => (
                 <button
                   key={optionIndex}
                   onClick={() => handleAnswer(option.tags)}
-                  className="mt-4 bg-lime-500 hover:bg-lime-600 text-white px-4 py-2 rounded"
+                  className="mb-2 bg-green-500 hover:bg-green-600 text-white px-4 py-2 rounded"
                 >
                   {option.answer}
                 </button>
               ))}
             </div>
           </div>
-        ) : (
+        ) : loading ? (
+          <div>Loading results...</div>
+        ) : error ? (
+          <div>Error loading the quiz: {error}</div>
+        ) : result ? (
           <div className="text-center space-y-4">
             <h3 className="text-xl font-semibold mb-4">Quiz Completed!</h3>
-            {result.oliveOils && (
-              <div className="space-y-4">
-                <div className="inline-block max-w-xs w-full">
-                  {" "}
-                  {/* Constrain the size of the image */}
-                  <img
-                    src={result.oliveOils.image}
-                    alt={result.oliveOils.name}
-                    className="object-contain w-full h-auto rounded-md" // object-contain to ensure the image is contained within the div
-                  />
+            <div className="space-y-4">
+              {result.image && (
+                <img
+                  src={result.image}
+                  alt={result.name}
+                  className="w-full h-auto rounded-md object-contain"
+                />
+              )}
+              <h4 className="text-lg font-semibold">Recommended Olive Oil:</h4>
+              <p className="font-bold">{result.name}</p>
+              <p>{result.description}</p>
+              {result.pairings && (
+                <div>
+                  <h5 className="text-lg font-semibold mt-4">Pairs well with:</h5>
+                  <ul className="list-disc list-inside">
+                    {result.pairings.map((pairing, index) => (
+                      <li key={index}>{pairing}</li>
+                    ))}
+                  </ul>
                 </div>
-                <h4 className="text-lg font-semibold">
-                  Recommended Olive Oil:
-                </h4>
-                <p className="font-bold">{result.oliveOils.name}</p>
-                <p>{result.oliveOils.description}</p>
-                {result.oliveOils.pairings && (
-                  <div>
-                    <h5 className="text-lg font-semibold mt-4">
-                      Pairs well with:
-                    </h5>
-                    <ul className="list-disc list-inside">
-                      {result.oliveOils.pairings.map((pairing, index) => (
-                        <li key={index}>{pairing}</li>
-                      ))}
-                    </ul>
-                  </div>
-                )}
-              </div>
-            )}
+              )}
+            </div>
             <button
               onClick={goToHomePage}
               className="mt-4 bg-red-500 hover:bg-red-600 text-white px-4 py-2 rounded flex items-center"
@@ -179,10 +211,12 @@ const OOQuiz = () => {
               ← Back to Home
             </button>
           </div>
+        ) : (
+          <div>No results found.</div>
         )}
       </div>
     </div>
   );
 };
 
-export default OOQuiz;
+export default OliveOilQuiz;

@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import grapeBackground from "../images/grape.webp";
+
 
 const BalsamicQuiz = () => {
   const questions = [
@@ -82,29 +82,29 @@ const BalsamicQuiz = () => {
     setError(false);
     setLoading(true);
 
-    // Fetch data
-    fetch("https://hunterwilson1.github.io/VF-API/data/balsamics.json")
-    .then((response) => {
-      if (!response.ok) {
-        throw new Error(`HTTP error! status: ${response.status}`);
-      }
-      return response.json();
-    })
-    .then((data) => {
-      if (data && data.balsamics) {
-        setBalsamicData(data.balsamics);
-      } else {
-        throw new Error("No valid data found");
-      }
-    })
-    .catch((error) => {
-      console.error("Failed to fetch balsamics:", error);
-      setError(true);
-    })
-    .finally(() => {
-      setLoading(false);
-    });
-}, []);
+    // Fetch data from backend
+    fetch("http://localhost:3001/api/balsamics") // Update with your backend API URL
+      .then((response) => {
+        if (!response.ok) {
+          throw new Error(`HTTP error! status: ${response.status}`);
+        }
+        return response.json();
+      })
+      .then((data) => {
+        if (data && data.length > 0) {
+          setBalsamicData(data);
+        } else {
+          throw new Error("No valid data found");
+        }
+      })
+      .catch((error) => {
+        console.error("Failed to fetch balsamics:", error);
+        setError(true);
+      })
+      .finally(() => {
+        setLoading(false);
+      });
+  }, []);
 
   const goToHomePage = () => {
     navigate("/");
@@ -192,18 +192,18 @@ const BalsamicQuiz = () => {
   };
 
   const backgroundStyle = {
-    backgroundImage: `url(${grapeBackground})`,
+    backgroundImage: `url(${`grapeBackground`})`,
     backgroundSize: "cover",
     backgroundPosition: "center",
   };
 
   return (
     <div
-      style={backgroundStyle}
+      style={{ backgroundImage: `url(${`grapeBackground`})`, backgroundSize: "cover", backgroundPosition: "center" }}
       className="min-h-screen flex items-center justify-center"
     >
       <div
-        style={containerStyle}
+        style={{ maxWidth: "600px", width: "90%", height: "auto", minHeight: "500px" }}
         className="bg-white bg-opacity-90 p-8 rounded-lg shadow-md flex flex-col items-center justify-center w-full max-w-lg"
       >
         {questionIndex < questions.length ? (
@@ -225,17 +225,19 @@ const BalsamicQuiz = () => {
           <div className="text-center space-y-4">
             <h3 className="text-xl font-semibold mb-4">Quiz Completed!</h3>
             <div className="space-y-4">
-            {result.image && (
-              <img src={result.image} alt={result.name} className="w-full h-auto rounded-md object-contain" />
-            )}
+              {result.image && (
+                <img
+                  src={result.image}
+                  alt={result.name}
+                  className="w-full h-auto rounded-md object-contain"
+                />
+              )}
               <h4 className="text-lg font-semibold">Recommended Balsamic:</h4>
               <p className="font-bold">{result.name}</p>
               <p>{result.description}</p>
               {result.pairings && (
                 <div>
-                  <h5 className="text-lg font-semibold mt-4">
-                    Pairs well with:
-                  </h5>
+                  <h5 className="text-lg font-semibold mt-4">Pairs well with:</h5>
                   <ul className="list-disc list-inside">
                     {result.pairings.map((pairing, index) => (
                       <li key={index}>{pairing}</li>

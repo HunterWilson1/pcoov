@@ -1,8 +1,6 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
-import oliveBackground from '../images/olive.png';
-import grapeBackground from '../images/grape.webp';
-import './ToggleSwitch.css'; // Make sure to create this CSS file
+import './ToggleSwitch.css';
 
 const LandingPage = () => {
   const [isOliveOilQuiz, setIsOliveOilQuiz] = useState(true);
@@ -12,17 +10,16 @@ const LandingPage = () => {
   };
 
   const containerStyle = {
-    maxWidth: '600px', // Set a max width for larger screens
-    width: '90%', // Use a percentage for smaller screens to keep it responsive
-    height: 'auto', // Adjust height automatically based on content
-    minHeight: '500px', // Minimum height to keep a decent size on all devices
+    maxWidth: '600px',
+    width: '90%',
+    height: 'auto',
+    minHeight: '500px',
   };
 
   const backgroundStyle = {
-    backgroundImage: `url(${isOliveOilQuiz ? oliveBackground : grapeBackground})`,
-    transition: 'background-image 0.5s ease-in-out', // Smooth transition for background change
-    backgroundSize: 'cover', // Ensure background covers the div completely
-    backgroundPosition: 'center', // Center the background image
+    transition: 'background-image 0.5s ease-in-out',
+    backgroundSize: 'cover',
+    backgroundPosition: 'center',
   };
 
   const quizLink = isOliveOilQuiz ? "/olive-oil-quiz" : "/balsamic-quiz";

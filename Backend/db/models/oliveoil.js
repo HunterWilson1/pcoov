@@ -1,5 +1,6 @@
+// oliveoil.js
 const { DataTypes } = require('sequelize');
-const sequelize = require('../connection');
+const sequelize = require('../connection'); // Assuming this is where your Sequelize connection is setup
 
 const OliveOil = sequelize.define('OliveOil', {
   name: {

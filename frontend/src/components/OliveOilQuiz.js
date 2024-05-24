@@ -64,102 +64,57 @@ const OliveOilQuiz = () => {
   const handleAnswer = (selectedTags) => {
     const updatedAnswers = [...answers, ...selectedTags];
     setAnswers(updatedAnswers);
-    console.log("Updated Answers:", updatedAnswers); // Debugging log
-
     if (questionIndex + 1 === questions.length) {
-      // All questions answered, fetch data and calculate result
       setLoading(true);
+      setError(null);
       fetchDataAndCalculateResult(updatedAnswers);
     } else {
-      setQuestionIndex(questionIndex + 1); // Go to next question
+      setQuestionIndex(questionIndex + 1);
     }
   };
 
   const fetchDataAndCalculateResult = (finalTags) => {
-    fetch("http://localhost:3001/api/olive_oils")
-      .then((response) => {
+    const tagsQuery = finalTags.join(',');
+    fetch(`http://localhost:3001/api/olive_oils?tags=${encodeURIComponent(tagsQuery)}`)
+      .then(response => {
         if (!response.ok) {
           throw new Error(`HTTP error! status: ${response.status}`);
         }
         return response.json();
       })
-      .then((data) => {
-        console.log("Fetched olive oil data:", data); // Debugging log
-        if (data && Array.isArray(data) && data.length > 0) {
+      .then(data => {
+        if (data.length > 0) {
           setOliveOilData(data);
           calculateResult(finalTags, data);
         } else {
-          throw new Error("No valid data found");
+          throw new Error("No valid data found based on selected tags");
         }
       })
-      .catch((error) => {
-        console.error("Failed to fetch olive oils:", error);
-        setError(error.message);
+      .catch(error => {
+        setError(`Failed to fetch olive oils: ${error.message}`);
         setLoading(false);
       });
   };
 
   const calculateResult = (finalTags, oliveOilData) => {
-    console.log("Calculating results for tags:", finalTags); // Log the final tags used for calculation
-
-    // Function to calculate the number of matching tags
-    const getMatchScore = (oilTags) => {
-      return oilTags.reduce((score, tag) => (finalTags.includes(tag) ? score + 1 : score), 0);
-    };
-
-    // Find the olive oil with the highest match score
     let bestMatch = null;
     let highestScore = 0;
 
     oliveOilData.forEach((oil) => {
-      const matchScore = getMatchScore(oil.tags);
+      const matchScore = oil.tags.filter(tag => finalTags.includes(tag)).length;
       if (matchScore > highestScore) {
         bestMatch = oil;
         highestScore = matchScore;
       }
     });
 
-    if (bestMatch) {
-      setResult(bestMatch);
-      console.log("Best Match:", bestMatch.name); // Log the best match found
-    } else {
-      console.log("No matching olive oil found.");
-      setResult(null);
-    }
+    setResult(bestMatch);
     setLoading(false);
   };
 
-  // Debug to check state values
-  console.log({
-    questionIndex,
-    questionsLength: questions.length,
-    result,
-    loading,
-    error,
-  });
-
-  const containerStyle = {
-    maxWidth: "600px",
-    width: "90%",
-    height: "auto",
-    minHeight: "500px",
-  };
-
-  const backgroundStyle = {
-
-    backgroundSize: "cover",
-    backgroundPosition: "center",
-  };
-
   return (
-    <div
-      style={backgroundStyle}
-      className="min-h-screen flex items-center justify-center"
-    >
-      <div
-        style={containerStyle}
-        className="bg-white bg-opacity-90 p-8 rounded-lg shadow-md flex flex-col items-center justify-center w-full max-w-lg"
-      >
+    <div className="min-h-screen flex items-center justify-center">
+      <div className="bg-white bg-opacity-90 p-8 rounded-lg shadow-md flex flex-col items-center justify-center w-full max-w-lg">
         {questionIndex < questions.length ? (
           <div>
             <h3 className="mb-4">{questions[questionIndex].text}</h3>

@@ -12,7 +12,7 @@ const OliveOil = sequelize.define('OliveOil', {
     allowNull: false,
   },
   tags: {
-    type: DataTypes.JSON,
+    type: DataTypes.STRING,
     allowNull: false,
   },
   image: {

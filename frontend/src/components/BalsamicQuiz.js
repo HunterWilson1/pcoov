@@ -65,148 +65,77 @@ const BalsamicQuiz = () => {
     },
   ];
 
-  // Initialize state
   const [answers, setAnswers] = useState([]);
-  const [balsamicData, setBalsamicData] = useState([]);
   const [questionIndex, setQuestionIndex] = useState(0);
   const [result, setResult] = useState(null);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState(false);
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState(null);
   const navigate = useNavigate();
 
-  useEffect(() => {
-    // Reset state on component mount
-    setAnswers([]);
-    setQuestionIndex(0);
-    setResult(null);
-    setError(false);
-    setLoading(true);
-
-    // Fetch data from backend
-    fetch("http://localhost:3001/api/balsamics") // Update with your backend API URL
-      .then((response) => {
-        if (!response.ok) {
-          throw new Error(`HTTP error! status: ${response.status}`);
-        }
-        return response.json();
-      })
-      .then((data) => {
-        if (data && data.length > 0) {
-          setBalsamicData(data);
-        } else {
-          throw new Error("No valid data found");
-        }
-      })
-      .catch((error) => {
-        console.error("Failed to fetch balsamics:", error);
-        setError(true);
-      })
-      .finally(() => {
-        setLoading(false);
-      });
-  }, []);
-
-  const goToHomePage = () => {
-    navigate("/");
-  };
+  const goToHomePage = () => navigate("/");
 
   const handleAnswer = (selectedTags) => {
     const updatedAnswers = [...answers, ...selectedTags];
     setAnswers(updatedAnswers);
-    console.log("Updated Answers:", updatedAnswers); // Debugging log
-
-    if (questionIndex + 1 === questions.length) {
-      calculateResult(updatedAnswers);
-      setQuestionIndex(questionIndex + 1); // Move to the results screen
+    if (questionIndex + 1 < questions.length) {
+      setQuestionIndex(questionIndex + 1);
     } else {
-      setQuestionIndex(questionIndex + 1); // Go to next question
+      setLoading(true);
+      setError(null);
+      fetchDataAndCalculateResult(updatedAnswers);
     }
   };
 
-  const calculateResult = (finalTags) => {
-    if (!balsamicData || balsamicData.length === 0) {
-      console.error("Balsamic data is not loaded yet or is empty.");
-      return; // Ensure data is available
-    }
+  const fetchDataAndCalculateResult = (finalTags) => {
+    const tagsQuery = finalTags.join(',');
+    fetch(`http://localhost:3001/api/balsamics?tags=${encodeURIComponent(tagsQuery)}`)
+      .then(response => response.ok ? response.json() : Promise.reject(`HTTP error! status: ${response.status}`))
+      .then(data => {
+        console.log("Fetched data:", data);  // Log fetched data
+        if (data.balsamics && data.balsamics.length > 0) {
+          calculateResult(finalTags, data.balsamics);
+        } else {
+          throw new Error("No valid data found based on selected tags");
+        }
+      })
+      .catch(error => {
+        console.error("Fetch error:", error); // Log any error
+        setError(`Failed to fetch balsamics: ${error.message}`);
+        setLoading(false);
+      });
+  };
 
-    console.log("Calculating results for tags:", finalTags); // Log the final tags used for calculation
+  const calculateResult = (finalTags, balsamicData) => {
+    let bestMatch = null;
+    let highestScore = 0;
 
-    // Start with all balsamics and narrow down
-    let possibleMatches = balsamicData;
-
-    // Apply a must-match filter for critical types like 'red', 'white', 'wine'
-    const criticalTags = ["red", "white", "wine"];
-    const criticalUserTags = finalTags.filter((tag) =>
-      criticalTags.includes(tag)
-    );
-
-    if (criticalUserTags.length > 0) {
-      possibleMatches = possibleMatches.filter((balsamic) =>
-        criticalUserTags.every((ctag) => balsamic.tags.includes(ctag))
-      );
-    }
-
-    // If there are still too many options, try to match additional tags
-    if (
-      possibleMatches.length > 1 &&
-      finalTags.length > criticalUserTags.length
-    ) {
-      const secondaryTags = finalTags.filter(
-        (tag) => !criticalTags.includes(tag)
-      );
-      let secondaryMatches = possibleMatches.filter((balsamic) =>
-        secondaryTags.some((stag) => balsamic.tags.includes(stag))
-      );
-
-      if (secondaryMatches.length > 0) {
-        possibleMatches = secondaryMatches;
+    balsamicData.forEach((balsamic) => {
+      const balsamicTags = balsamic.tags.split(', '); // Split the tags string into an array
+      const matchScore = balsamicTags.filter(tag => finalTags.includes(tag)).length;
+      if (matchScore > highestScore) {
+        bestMatch = balsamic;
+        highestScore = matchScore;
       }
-    }
+    });
 
-    // Select the best match or report no matches
-    if (possibleMatches.length > 0) {
-      setResult(possibleMatches[0]); // You can choose to refine how you pick the best match
-      console.log("Best Match:", possibleMatches[0].name); // Log the best match found
+    if (bestMatch) {
+      setResult(bestMatch);
+      console.log("Best match:", bestMatch); // Log the best match
+      navigate('/results', { state: { result: bestMatch } }); // Navigate with state
     } else {
-      console.log("No matching balsamic found.");
-      setResult(null);
+      setError("No matching balsamics found.");
     }
-  };
-
-  // Debug to check state values
-  console.log({
-    questionIndex,
-    questionsLength: questions.length,
-    result,
-  });
-
-  // Render logic
-  if (loading) return <div>Loading...</div>;
-  if (error) return <div>Error loading the quiz.</div>;
-
-  const containerStyle = {
-    maxWidth: "600px", // Set a max width for larger screens
-    width: "90%", // Use a percentage for smaller screens to keep it responsive
-    height: "auto", // Adjust height automatically based on content
-    minHeight: "500px", // Minimum height to keep a decent size on all devices
-  };
-
-  const backgroundStyle = {
-    backgroundImage: `url(${`grapeBackground`})`,
-    backgroundSize: "cover",
-    backgroundPosition: "center",
+    setLoading(false);
   };
 
   return (
-    <div
-      style={{ backgroundImage: `url(${`grapeBackground`})`, backgroundSize: "cover", backgroundPosition: "center" }}
-      className="min-h-screen flex items-center justify-center"
-    >
-      <div
-        style={{ maxWidth: "600px", width: "90%", height: "auto", minHeight: "500px" }}
-        className="bg-white bg-opacity-90 p-8 rounded-lg shadow-md flex flex-col items-center justify-center w-full max-w-lg"
-      >
-        {questionIndex < questions.length ? (
+    <div className="min-h-screen flex items-center justify-center">
+      <div className="bg-white bg-opacity-90 p-8 rounded-lg shadow-md flex flex-col items-center justify-center w-full max-w-lg">
+        {loading ? (
+          <div>Loading results...</div>
+        ) : error ? (
+          <div>Error loading the quiz: {error}</div>
+        ) : questionIndex < questions.length ? (
           <div>
             <h3 className="mb-4">{questions[questionIndex].text}</h3>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
@@ -219,32 +148,6 @@ const BalsamicQuiz = () => {
                   {option.answer}
                 </button>
               ))}
-            </div>
-          </div>
-        ) : result ? (
-          <div className="text-center space-y-4">
-            <h3 className="text-xl font-semibold mb-4">Quiz Completed!</h3>
-            <div className="space-y-4">
-              {result.image && (
-                <img
-                  src={result.image}
-                  alt={result.name}
-                  className="w-full h-auto rounded-md object-contain"
-                />
-              )}
-              <h4 className="text-lg font-semibold">Recommended Balsamic:</h4>
-              <p className="font-bold">{result.name}</p>
-              <p>{result.description}</p>
-              {result.pairings && (
-                <div>
-                  <h5 className="text-lg font-semibold mt-4">Pairs well with:</h5>
-                  <ul className="list-disc list-inside">
-                    {result.pairings.map((pairing, index) => (
-                      <li key={index}>{pairing}</li>
-                    ))}
-                  </ul>
-                </div>
-              )}
             </div>
           </div>
         ) : (

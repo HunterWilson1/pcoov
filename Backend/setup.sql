@@ -4,13 +4,14 @@ CREATE DATABASE IF NOT EXISTS pcoov;
 
 USE pcoov;
 
-
+DROP TABLE IF EXISTS olive_oils;
+DROP TABLE IF EXISTS balsamics;
 
 CREATE TABLE IF NOT EXISTS balsamics (
     id INT AUTO_INCREMENT PRIMARY KEY,
     name VARCHAR(255) NOT NULL,
     description TEXT NOT NULL,
-    tags JSON NOT NULL,
+    tags VARCHAR(225) NOT NULL,
     image VARCHAR(255) NOT NULL,
     pairings JSON NOT NULL
 );
@@ -20,7 +21,7 @@ CREATE TABLE IF NOT EXISTS olive_oils (
     id INT AUTO_INCREMENT PRIMARY KEY,
     name VARCHAR(255) NOT NULL,
     description TEXT NOT NULL,
-    tags JSON NOT NULL,
+    tags VARCHAR(225) NULL,
     image VARCHAR(255) NOT NULL,
     pairings JSON
 );

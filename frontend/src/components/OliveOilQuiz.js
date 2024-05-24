@@ -50,47 +50,40 @@ const OliveOilQuiz = () => {
   ];
 
   const [answers, setAnswers] = useState([]);
-  const [oliveOilData, setOliveOilData] = useState([]);
   const [questionIndex, setQuestionIndex] = useState(0);
   const [result, setResult] = useState(null);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
   const navigate = useNavigate();
 
-  const goToHomePage = () => {
-    navigate("/");
-  };
+  const goToHomePage = () => navigate("/");
 
   const handleAnswer = (selectedTags) => {
     const updatedAnswers = [...answers, ...selectedTags];
     setAnswers(updatedAnswers);
-    if (questionIndex + 1 === questions.length) {
+    if (questionIndex + 1 < questions.length) {
+      setQuestionIndex(questionIndex + 1);
+    } else {
       setLoading(true);
       setError(null);
       fetchDataAndCalculateResult(updatedAnswers);
-    } else {
-      setQuestionIndex(questionIndex + 1);
     }
   };
 
   const fetchDataAndCalculateResult = (finalTags) => {
     const tagsQuery = finalTags.join(',');
     fetch(`http://localhost:3001/api/olive_oils?tags=${encodeURIComponent(tagsQuery)}`)
-      .then(response => {
-        if (!response.ok) {
-          throw new Error(`HTTP error! status: ${response.status}`);
-        }
-        return response.json();
-      })
+      .then(response => response.ok ? response.json() : Promise.reject(`HTTP error! status: ${response.status}`))
       .then(data => {
-        if (data.length > 0) {
-          setOliveOilData(data);
-          calculateResult(finalTags, data);
+        console.log("Fetched data:", data);  // Log fetched data
+        if (data.olive_oils.length > 0) {
+          calculateResult(finalTags, data.olive_oils);
         } else {
           throw new Error("No valid data found based on selected tags");
         }
       })
       .catch(error => {
+        console.error("Fetch error:", error); // Log any error
         setError(`Failed to fetch olive oils: ${error.message}`);
         setLoading(false);
       });
@@ -101,21 +94,32 @@ const OliveOilQuiz = () => {
     let highestScore = 0;
 
     oliveOilData.forEach((oil) => {
-      const matchScore = oil.tags.filter(tag => finalTags.includes(tag)).length;
+      const oilTags = oil.tags.split(', '); // Split the tags string into an array
+      const matchScore = oilTags.filter(tag => finalTags.includes(tag)).length;
       if (matchScore > highestScore) {
         bestMatch = oil;
         highestScore = matchScore;
       }
     });
 
-    setResult(bestMatch);
+    if (bestMatch) {
+      setResult(bestMatch);
+      console.log("Best match:", bestMatch); // Log the best match
+      navigate('/results', { state: { result: bestMatch } });
+    } else {
+      setError("No matching olive oils found.");
+    }
     setLoading(false);
   };
 
   return (
     <div className="min-h-screen flex items-center justify-center">
       <div className="bg-white bg-opacity-90 p-8 rounded-lg shadow-md flex flex-col items-center justify-center w-full max-w-lg">
-        {questionIndex < questions.length ? (
+        {loading ? (
+          <div>Loading results...</div>
+        ) : error ? (
+          <div>Error loading the quiz: {error}</div>
+        ) : questionIndex < questions.length ? (
           <div>
             <h3 className="mb-4">{questions[questionIndex].text}</h3>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
@@ -129,42 +133,6 @@ const OliveOilQuiz = () => {
                 </button>
               ))}
             </div>
-          </div>
-        ) : loading ? (
-          <div>Loading results...</div>
-        ) : error ? (
-          <div>Error loading the quiz: {error}</div>
-        ) : result ? (
-          <div className="text-center space-y-4">
-            <h3 className="text-xl font-semibold mb-4">Quiz Completed!</h3>
-            <div className="space-y-4">
-              {result.image && (
-                <img
-                  src={result.image}
-                  alt={result.name}
-                  className="w-full h-auto rounded-md object-contain"
-                />
-              )}
-              <h4 className="text-lg font-semibold">Recommended Olive Oil:</h4>
-              <p className="font-bold">{result.name}</p>
-              <p>{result.description}</p>
-              {result.pairings && (
-                <div>
-                  <h5 className="text-lg font-semibold mt-4">Pairs well with:</h5>
-                  <ul className="list-disc list-inside">
-                    {result.pairings.map((pairing, index) => (
-                      <li key={index}>{pairing}</li>
-                    ))}
-                  </ul>
-                </div>
-              )}
-            </div>
-            <button
-              onClick={goToHomePage}
-              className="mt-4 bg-red-500 hover:bg-red-600 text-white px-4 py-2 rounded flex items-center"
-            >
-              ← Back to Home
-            </button>
           </div>
         ) : (
           <div>No results found.</div>

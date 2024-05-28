@@ -1,5 +1,7 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import oliveBackground from "../assets/olive.webp"; // Ensure the path is correct
+import balsamicBackground from "../assets/balsamic.webp"; // Ensure the path is correct
 
 const OliveOilQuiz = () => {
   const questions = [
@@ -113,21 +115,22 @@ const OliveOilQuiz = () => {
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center">
+    
+    <div className="min-h-screen flex items-center justify-center bg-green-50" style={{ backgroundImage: `url(${oliveBackground})`, backgroundSize: 'cover', backgroundPosition: 'center', backgroundRepeat: 'no-repeat' }}>
       <div className="bg-white bg-opacity-90 p-8 rounded-lg shadow-md flex flex-col items-center justify-center w-full max-w-lg">
         {loading ? (
-          <div>Loading results...</div>
+          <div className="text-green-700 text-lg font-bold">Loading results...</div>
         ) : error ? (
-          <div>Error loading the quiz: {error}</div>
+          <div className="text-red-500 text-lg font-bold">Error loading the quiz: {error}</div>
         ) : questionIndex < questions.length ? (
-          <div>
-            <h3 className="mb-4">{questions[questionIndex].text}</h3>
+          <div className="text-center">
+            <h3 className="mb-6 text-2xl font-bold text-green-700">{questions[questionIndex].text}</h3>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               {questions[questionIndex].options.map((option, optionIndex) => (
                 <button
                   key={optionIndex}
                   onClick={() => handleAnswer(option.tags)}
-                  className="mb-2 bg-green-500 hover:bg-green-600 text-white px-4 py-2 rounded"
+                  className="mb-2 bg-green-500 hover:bg-green-600 text-white px-4 py-2 rounded-full shadow-md transition"
                 >
                   {option.answer}
                 </button>
@@ -135,7 +138,7 @@ const OliveOilQuiz = () => {
             </div>
           </div>
         ) : (
-          <div>No results found.</div>
+          <div className="text-green-700 text-lg font-bold">No results found.</div>
         )}
       </div>
     </div>

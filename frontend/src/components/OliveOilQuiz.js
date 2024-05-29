@@ -107,7 +107,7 @@ const OliveOilQuiz = () => {
     if (bestMatch) {
       setResult(bestMatch);
       console.log("Best match:", bestMatch); // Log the best match
-      navigate('/results', { state: { result: bestMatch } });
+      navigate('/olive-result', { state: { result: bestMatch } });
     } else {
       setError("No matching olive oils found.");
     }

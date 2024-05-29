@@ -122,7 +122,7 @@ const BalsamicQuiz = () => {
     if (bestMatch) {
       setResult(bestMatch);
       console.log("Best match:", bestMatch); // Log the best match
-      navigate('/results', { state: { result: bestMatch } });
+      navigate('/balsamic-result', { state: { result: bestMatch } });
     } else {
       setError("No matching balsamics found.");
     }

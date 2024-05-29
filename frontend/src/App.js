@@ -3,7 +3,10 @@ import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import LandingPage from './components/LandingPage';
 import OliveOilQuiz from "./components/OliveOilQuiz";
 import BalsamicQuiz from "./components/BalsamicQuiz";
-import Results from './components/Results';
+import OliveResult from './components/Oresult';
+import BalsamicResult from './components/Bresult';
+import About from './components/About';
+import Contact from'./components/Contact';
 
 function App() {
   return (
@@ -12,7 +15,10 @@ function App() {
         <Route path="/" element={<LandingPage />} />
         <Route path="/olive-oil-quiz" element={<OliveOilQuiz />} />
         <Route path="/balsamic-quiz" element={<BalsamicQuiz />} />
-        <Route path="/results" element={<Results />} />
+        <Route path="/olive-result" element={<OliveResult />} />
+        <Route path="/balsamic-result" element={<BalsamicResult />} />
+        <Route path="/about" element={<About />} />
+        <Route path="/contact" element={<Contact />} />
       </Routes>
     </Router>
   );

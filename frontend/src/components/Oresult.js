@@ -3,15 +3,13 @@ import { Link, useLocation } from "react-router-dom";
 import { Menu } from "@headlessui/react";
 import { XMarkIcon, Bars3Icon } from "@heroicons/react/24/solid";
 import oliveBackground from "../assets/olive.webp"; // Ensure the path is correct
-import balsamicBackground from "../assets/balsamic.webp"; // Ensure the path is correct
 
-const ResultPage = () => {
+const OliveOilResultPage = () => {
   const location = useLocation();
-  const { result, quizType } = location.state || {};
-  const isOliveQuiz = quizType === "olive";
+  const { result } = location.state || {};
 
   const backgroundStyle = {
-    backgroundImage: `url(${isOliveQuiz ? oliveBackground : balsamicBackground})`,
+    backgroundImage: `url(${oliveBackground})`,
     backgroundSize: "cover",
     backgroundPosition: "center",
     backgroundRepeat: "no-repeat",
@@ -28,12 +26,15 @@ const ResultPage = () => {
   }
 
   return (
-    <div className="min-h-screen flex flex-col items-center" style={backgroundStyle}>
-      <header className={`w-full ${isOliveQuiz ? "bg-green-800" : "bg-purple-800"} text-white py-4 shadow-md relative z-20`}>
+    <div
+      className="min-h-screen flex flex-col items-center"
+      style={backgroundStyle}
+    >
+      <header className="w-full bg-green-800 text-white py-4 shadow-md relative z-20">
         <nav className="container mx-auto flex justify-between items-center px-4">
           <div className="text-2xl font-bold">Olive Oil & Vinegar Quiz</div>
           <div className="hidden md:flex">
-            <Link to="/#home" className="mx-2">
+            <Link to="/" className="mx-2">
               Home
             </Link>
             <Link to="/about" className="mx-2">
@@ -57,13 +58,17 @@ const ResultPage = () => {
                 )}
               </Menu.Button>
               <Menu.Items
-                className={`${isOpen ? "block" : "hidden"} absolute right-0 mt-2 w-48 rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5 focus:outline-none z-30`}
+                className={`${
+                  isOpen ? "block" : "hidden"
+                } absolute right-0 mt-2 w-48 rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5 focus:outline-none z-30`}
               >
                 <Menu.Item>
                   {({ active }) => (
                     <Link
-                      to="/#home"
-                      className={`${active ? "bg-gray-100" : ""} block px-4 py-2 text-sm text-gray-700`}
+                      to="/"
+                      className={`${
+                        active ? "bg-gray-100" : ""
+                      } block px-4 py-2 text-sm text-gray-700`}
                     >
                       Home
                     </Link>
@@ -73,7 +78,9 @@ const ResultPage = () => {
                   {({ active }) => (
                     <Link
                       to="/about"
-                      className={`${active ? "bg-gray-100" : ""} block px-4 py-2 text-sm text-gray-700`}
+                      className={`${
+                        active ? "bg-gray-100" : ""
+                      } block px-4 py-2 text-sm text-gray-700`}
                     >
                       About
                     </Link>
@@ -83,7 +90,9 @@ const ResultPage = () => {
                   {({ active }) => (
                     <Link
                       to="/contact"
-                      className={`${active ? "bg-gray-100" : ""} block px-4 py-2 text-sm text-gray-700`}
+                      className={`${
+                        active ? "bg-gray-100" : ""
+                      } block px-4 py-2 text-sm text-gray-700`}
                     >
                       Contact
                     </Link>
@@ -95,18 +104,22 @@ const ResultPage = () => {
         </nav>
       </header>
 
-      <div className="flex-grow flex items-center justify-center w-full">
-        <div className="bg-white p-8 rounded-lg shadow-md text-center w-full max-w-lg bg-opacity-90">
-          <h3 className={`text-xl font-semibold mb-4 ${isOliveQuiz ? "text-green-700" : "text-purple-700"}`}>
-            Recommended {isOliveQuiz ? "Olive Oil" : "Balsamic"}
+      <div className="flex-grow flex items-center justify-center w-full pt-16">
+        <div className="bg-white p-12 rounded-lg shadow-2xl text-center w-full max-w-3xl bg-opacity-90">
+          <h3 className="text-3xl font-extrabold mb-6 text-green-700">
+            Recommended Olive Oil
           </h3>
-          <img src={result.image} alt={result.name} className="w-full max-w-sm h-auto rounded-md object-contain mb-4" />
-          <h4 className="text-lg font-semibold">{result.name}</h4>
-          <p>{result.description}</p>
+          <img
+            src={result.image}
+            alt={result.name}
+            className="w-full max-w-sm h-auto rounded-md object-contain mb-4"
+          />
+          <h4 className="text-2xl font-semibold mb-4">{result.name}</h4>
+          <p className="text-lg mb-6">{result.description}</p>
           {result.pairings && result.pairings.length > 0 && (
             <>
-              <h5 className="text-lg font-semibold mt-4">Pairs well with:</h5>
-              <ul className="list-disc list-inside">
+              <h5 className="text-xl font-semibold mt-6">Pairs well with:</h5>
+              <ul className="list-disc list-inside text-left text-lg mx-auto mb-6 max-w-md">
                 {result.pairings.map((pairing, index) => (
                   <li key={index}>{pairing}</li>
                 ))}
@@ -115,14 +128,14 @@ const ResultPage = () => {
           )}
           <Link
             to="/"
-            className={`mt-4 ${isOliveQuiz ? "bg-green-500 hover:bg-green-600" : "bg-purple-500 hover:bg-purple-600"} text-white px-4 py-2 rounded shadow-lg`}
+            className="mt-8 bg-green-500 hover:bg-green-600 text-white px-6 py-3 rounded-full shadow-lg transition-transform transform hover:scale-105"
           >
             Back to Home
           </Link>
         </div>
       </div>
 
-      <footer className={`w-full ${isOliveQuiz ? "bg-green-800" : "bg-purple-800"} text-white py-4 shadow-md relative z-20`}>
+      <footer className="w-full bg-green-800 text-white py-4 shadow-md relative z-20">
         <div className="container mx-auto text-center">
           &copy; 2024 Olive Oil & Vinegar Quiz. All rights reserved.
         </div>
@@ -131,4 +144,4 @@ const ResultPage = () => {
   );
 };
 
-export default ResultPage;
+export default OliveOilResultPage;

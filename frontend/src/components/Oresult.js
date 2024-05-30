@@ -110,7 +110,6 @@ const OliveOilResultPage = () => {
             Recommended Olive Oil
           </h3>
           <img
-            src={result.image}
             alt={result.name}
             className="w-full max-w-sm h-auto rounded-md object-contain mb-4"
           />

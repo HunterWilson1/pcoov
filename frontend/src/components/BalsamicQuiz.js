@@ -131,9 +131,9 @@ const BalsamicQuiz = () => {
 
   return (
     <div className="min-h-screen flex flex-col items-center" style={{ backgroundImage: `url(${balsamicBackground})`, backgroundSize: 'cover', backgroundPosition: 'center', backgroundRepeat: 'no-repeat' }}>
-      <header className="w-full bg-purple-800 text-white py-4 shadow-md relative z-20">
+      <header className="w-full bg-pink-800 text-white py-4 shadow-md relative z-20">
         <nav className="container mx-auto flex justify-between items-center px-4">
-          <div className="text-2xl font-bold">Olive Oil & Vinegar Quiz</div>
+          <div className="text-2xl font-bold">Find Your Balsamic</div>
           <div className="hidden md:flex">
             <Link to="/#home" className="mx-2">
               Home
@@ -200,18 +200,18 @@ const BalsamicQuiz = () => {
       <div className="flex-grow flex items-center justify-center w-full">
         <div className="bg-white bg-opacity-90 p-8 rounded-lg shadow-md flex flex-col items-center justify-center w-full max-w-lg">
           {loading ? (
-            <div className="text-purple-700 text-lg font-bold">Loading results...</div>
+            <div className="text-pink-800 text-lg font-bold">Loading results...</div>
           ) : error ? (
             <div className="text-red-500 text-lg font-bold">Error loading the quiz: {error}</div>
           ) : questionIndex < questions.length ? (
             <div className="text-center">
-              <h3 className="mb-6 text-2xl font-bold text-purple-700">{questions[questionIndex].text}</h3>
+              <h3 className="mb-6 text-2xl font-bold text-pink-800">{questions[questionIndex].text}</h3>
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                 {questions[questionIndex].options.map((option, optionIndex) => (
                   <button
                     key={optionIndex}
                     onClick={() => handleAnswer(option.tags)}
-                    className="mb-2 bg-purple-500 hover:bg-purple-600 text-white px-4 py-2 rounded-full shadow-md transition"
+                    className="mb-2 bg-pink-800 hover:bg-pink-900 text-white px-4 py-2 rounded-full shadow-md transition"
                   >
                     {option.answer}
                   </button>
@@ -224,7 +224,7 @@ const BalsamicQuiz = () => {
         </div>
       </div>
 
-      <footer className="w-full bg-purple-800 text-white py-4 shadow-md relative z-20">
+      <footer className="w-full bg-pink-800 text-white py-4 shadow-md relative z-20">
         <div className="container mx-auto text-center">
           &copy; 2024 Olive Oil & Vinegar Quiz. All rights reserved.
         </div>

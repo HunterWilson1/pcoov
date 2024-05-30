@@ -27,9 +27,9 @@ const BalsamicResultPage = () => {
 
   return (
     <div className="min-h-screen flex flex-col items-center" style={backgroundStyle}>
-      <header className="w-full bg-purple-800 text-white py-4 shadow-md relative z-20">
+      <header className="w-full bg-pink-800 text-white py-4 shadow-md relative z-20">
         <nav className="container mx-auto flex justify-between items-center px-4">
-          <div className="text-2xl font-bold">Olive Oil & Vinegar Quiz</div>
+          <div className="text-2xl font-bold">Find your Balsamic!</div>
           <div className="hidden md:flex">
             <Link to="/" className="mx-2">
               Home
@@ -95,7 +95,7 @@ const BalsamicResultPage = () => {
 
       <div className="flex-grow flex items-center justify-center w-full pt-16">
   <div className="bg-white p-12 rounded-lg shadow-2xl text-center w-full max-w-3xl bg-opacity-90">
-    <h3 className="text-3xl font-extrabold mb-6 text-purple-700">
+    <h3 className="text-3xl font-extrabold mb-6 text-pink-800">
       Recommended Balsamic
     </h3>
     <h4 className="text-2xl font-semibold mb-4">{result.name}</h4>
@@ -112,7 +112,7 @@ const BalsamicResultPage = () => {
     )}
     <Link
       to="/"
-      className="mt-8 bg-purple-500 hover:bg-purple-600 text-white px-6 py-3 rounded-full shadow-lg transition-transform transform hover:scale-105"
+      className="mt-8 bg-pink-800 hover:bg-pink-900 text-white px-6 py-3 rounded-full shadow-lg transition-transform transform hover:scale-105"
     >
       Back to Home
     </Link>
@@ -120,7 +120,7 @@ const BalsamicResultPage = () => {
 </div>
 
 
-      <footer className="w-full bg-purple-800 text-white py-4 shadow-md relative z-20">
+      <footer className="w-full bg-pink-900 text-white py-4 shadow-md relative z-20">
         <div className="container mx-auto text-center">
           &copy; 2024 Olive Oil & Vinegar Quiz. All rights reserved.
         </div>

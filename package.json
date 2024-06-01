@@ -2,13 +2,12 @@
     "name": "pcoov",
     "version": "1.0.0",
     "engines": {
-        "node": "20.x",
-        "npm": "10.x"
-      },
+      "node": "14.x"
+    },
     "scripts": {
-      "heroku-postbuild": "cd Backend && npm install && npm run build",
-      "heroku-postbuild2": "cd frontend && npm install && npm run build",
-      "start": "cd Backend && npm start"
+      "start": "node backend/server.js",
+      "heroku-postbuild": "cd frontend && npm install && npm run build"
     }
   }
+  
   

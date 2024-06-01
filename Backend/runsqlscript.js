@@ -331,7 +331,7 @@ const balsamicData = [
       tags: 'oliveOil, herbaceous, dipping, mild, Italian',
       image: 'images/oliveoils/tuscan-herb.jpg',
       description: 'Made with certified Ultra-Premium Extra Virgin Olive Oil, our Tuscan Herb Infused Olive Oil contains a harmonious and delicious combination of herbal flavors including oregano, rosemary, marjoram and garlic. Use to saute, grill, broil, roast, and bake. It brings spectacular flavor to just about anything. Try with chicken, vegetables, potatoes, pork, pasta, rice, turkey, sauces, marinades, vinaigrettes, aioli, bread dipping and more.',
-      pairings: ['Traditional aged 18 Balsamic', 'Sicilian Lemon']
+      pairings: []
     },
     {
       name: 'Garlic',

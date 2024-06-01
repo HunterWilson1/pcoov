@@ -109,10 +109,6 @@ const OliveOilResultPage = () => {
           <h3 className="text-3xl font-extrabold mb-6 text-green-700">
             Recommended Olive Oil
           </h3>
-          <img
-            alt={result.name}
-            className="w-full max-w-sm h-auto rounded-md object-contain mb-4"
-          />
           <h4 className="text-2xl font-semibold mb-4">{result.name}</h4>
           <p className="text-lg mb-6">{result.description}</p>
           {result.pairings && result.pairings.length > 0 && (

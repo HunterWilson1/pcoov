@@ -211,7 +211,7 @@ const BalsamicQuiz = () => {
                   <button
                     key={optionIndex}
                     onClick={() => handleAnswer(option.tags)}
-                    className="mb-2 bg-pink-800 hover:bg-pink-900 text-white px-4 py-2 rounded-full shadow-md transition"
+                    className="mb-2 bg-pink-500 hover:bg-pink-600 text-white px-4 py-2 rounded-full shadow-md transition"
                   >
                     {option.answer}
                   </button>

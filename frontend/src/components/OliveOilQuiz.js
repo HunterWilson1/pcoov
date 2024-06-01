@@ -1,7 +1,8 @@
-import React, { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import React, { useState, useEffect } from "react";
+import { Link, useNavigate } from "react-router-dom";
+import { Menu } from "@headlessui/react";
+import { XMarkIcon, Bars3Icon } from "@heroicons/react/24/solid";
 import oliveBackground from "../assets/olive.webp"; // Ensure the path is correct
-import balsamicBackground from "../assets/balsamic.webp"; // Ensure the path is correct
 
 const OliveOilQuiz = () => {
   const questions = [
@@ -58,8 +59,6 @@ const OliveOilQuiz = () => {
   const [error, setError] = useState(null);
   const navigate = useNavigate();
 
-  const goToHomePage = () => navigate("/");
-
   const handleAnswer = (selectedTags) => {
     const updatedAnswers = [...answers, ...selectedTags];
     setAnswers(updatedAnswers);
@@ -114,33 +113,118 @@ const OliveOilQuiz = () => {
     setLoading(false);
   };
 
+  const [isOpen, setIsOpen] = useState(false);
+
+  const backgroundStyle = {
+    backgroundImage: `url(${oliveBackground})`,
+    backgroundSize: 'cover',
+    backgroundPosition: 'center',
+    backgroundRepeat: 'no-repeat',
+  };
+
   return (
-    
-    <div className="min-h-screen flex items-center justify-center bg-green-50" style={{ backgroundImage: `url(${oliveBackground})`, backgroundSize: 'cover', backgroundPosition: 'center', backgroundRepeat: 'no-repeat' }}>
-      <div className="bg-white bg-opacity-90 p-8 rounded-lg shadow-md flex flex-col items-center justify-center w-full max-w-lg">
-        {loading ? (
-          <div className="text-green-700 text-lg font-bold">Loading results...</div>
-        ) : error ? (
-          <div className="text-red-500 text-lg font-bold">Error loading the quiz: {error}</div>
-        ) : questionIndex < questions.length ? (
-          <div className="text-center">
-            <h3 className="mb-6 text-2xl font-bold text-green-700">{questions[questionIndex].text}</h3>
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-              {questions[questionIndex].options.map((option, optionIndex) => (
-                <button
-                  key={optionIndex}
-                  onClick={() => handleAnswer(option.tags)}
-                  className="mb-2 bg-green-500 hover:bg-green-600 text-white px-4 py-2 rounded-full shadow-md transition"
-                >
-                  {option.answer}
-                </button>
-              ))}
-            </div>
+    <div
+      style={backgroundStyle}
+      className="min-h-screen flex flex-col items-center justify-center"
+    >
+      <header className="w-full bg-green-800 text-white py-4 shadow-md z-20">
+        <nav className="container mx-auto flex justify-between items-center px-4">
+          <div className="text-2xl font-bold">Find Your Olive Oil</div>
+          <div className="hidden md:flex">
+            <Link to="/#home" className="mx-2">
+              Home
+            </Link>
+            <Link to="/about" className="mx-2">
+              About
+            </Link>
+            <Link to="/contact" className="mx-2">
+              Contact
+            </Link>
           </div>
-        ) : (
-          <div className="text-green-700 text-lg font-bold">No results found.</div>
-        )}
+          <div className="md:hidden relative">
+            <Menu as="div" className="relative">
+              <Menu.Button
+                onClick={() => setIsOpen(!isOpen)}
+                className="inline-flex items-center justify-center p-2 rounded-md text-gray-400 hover:text-white hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-white"
+              >
+                <span className="sr-only">Open main menu</span>
+                {isOpen ? (
+                  <XMarkIcon className="block h-6 w-6" aria-hidden="true" />
+                ) : (
+                  <Bars3Icon className="block h-6 w-6" aria-hidden="true" />
+                )}
+              </Menu.Button>
+              <Menu.Items
+                className={`${isOpen ? "block" : "hidden"} absolute right-0 mt-2 w-48 rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5 focus:outline-none z-30`}
+              >
+                <Menu.Item>
+                  {({ active }) => (
+                    <Link
+                      to="/#home"
+                      className={`${active ? "bg-gray-100" : ""} block px-4 py-2 text-sm text-gray-700`}
+                    >
+                      Home
+                    </Link>
+                  )}
+                </Menu.Item>
+                <Menu.Item>
+                  {({ active }) => (
+                    <Link
+                      to="/about"
+                      className={`${active ? "bg-gray-100" : ""} block px-4 py-2 text-sm text-gray-700`}
+                    >
+                      About
+                    </Link>
+                  )}
+                </Menu.Item>
+                <Menu.Item>
+                  {({ active }) => (
+                    <Link
+                      to="/contact"
+                      className={`${active ? "bg-gray-100" : ""} block px-4 py-2 text-sm text-gray-700`}
+                    >
+                      Contact
+                    </Link>
+                  )}
+                </Menu.Item>
+              </Menu.Items>
+            </Menu>
+          </div>
+        </nav>
+      </header>
+
+      <div className="flex-grow flex items-center justify-center w-full">
+        <div className="bg-white bg-opacity-90 p-8 rounded-lg shadow-md flex flex-col items-center justify-center w-full max-w-lg">
+          {loading ? (
+            <div className="text-green-700 text-lg font-bold">Loading results...</div>
+          ) : error ? (
+            <div className="text-red-500 text-lg font-bold">Error loading the quiz: {error}</div>
+          ) : questionIndex < questions.length ? (
+            <div className="text-center">
+              <h3 className="mb-6 text-2xl font-bold text-green-700">{questions[questionIndex].text}</h3>
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                {questions[questionIndex].options.map((option, optionIndex) => (
+                  <button
+                    key={optionIndex}
+                    onClick={() => handleAnswer(option.tags)}
+                    className="mb-2 bg-green-500 hover:bg-green-600 text-white px-4 py-2 rounded-full shadow-md transition"
+                  >
+                    {option.answer}
+                  </button>
+                ))}
+              </div>
+            </div>
+          ) : (
+            <div className="text-green-700 text-lg font-bold">No results found.</div>
+          )}
+        </div>
       </div>
+
+      <footer className="w-full bg-green-800 text-white py-4 shadow-md z-20">
+        <div className="container mx-auto text-center">
+          &copy; 2024 Find Your Olive Oil. All rights reserved.
+        </div>
+      </footer>
     </div>
   );
 };

@@ -4,8 +4,36 @@ import { Menu } from '@headlessui/react';
 import { XMarkIcon, Bars3Icon } from '@heroicons/react/24/solid';
 import olivebackground from '../assets/olive.webp';
 
+const faqData = [
+  {
+    question: "What is olive oil?",
+    answer: "Olive oil is a liquid fat obtained from olives, a traditional tree crop of the Mediterranean Basin. It is commonly used in cooking, whether for frying or as a salad dressing."
+  },
+  {
+    question: "What are the health benefits of olive oil?",
+    answer: "Olive oil is rich in monounsaturated fats, which are known to improve heart health. It also contains antioxidants and has anti-inflammatory properties."
+  },
+  {
+    question: "How should I store olive oil?",
+    answer: "Olive oil should be stored in a cool, dark place away from heat and light to maintain its quality and extend its shelf life."
+  },
+  {
+    question: "What is balsamic vinegar?",
+    answer: "Balsamic vinegar is a very dark, concentrated, and intensely flavoured vinegar originating in Italy, made wholly or partially from grape must."
+  },
+  {
+    question: "How is balsamic vinegar used?",
+    answer: "Balsamic vinegar can be used in salad dressings, marinades, and sauces, or drizzled over vegetables, meat, and even desserts."
+  },
+];
+
 const AboutPage = () => {
   const [isOpen, setIsOpen] = useState(false);
+  const [openIndex, setOpenIndex] = useState(null);
+
+  const toggleDropdown = (index) => {
+    setOpenIndex(openIndex === index ? null : index);
+  };
 
   const backgroundStyle = {
     backgroundImage: `url(${olivebackground})`,
@@ -21,9 +49,7 @@ const AboutPage = () => {
     >
       <header className="w-full bg-green-800 text-white py-4 shadow-md z-20">
         <nav className="container mx-auto flex justify-between items-center px-4">
-          <div className="flex items-center">
-            <div className="text-2xl font-bold">Find Your Olive Oil</div>
-          </div>
+          <div className="text-2xl font-bold">Find Your Olive Oil</div>
           <div className="hidden md:flex">
             <Link to="/#home" className="mx-2">
               Home
@@ -99,6 +125,30 @@ const AboutPage = () => {
           <p className="text-lg mb-6">
             Whether you're a seasoned cook or just starting your culinary journey, we're here to help you find the perfect additions to your pantry. Thank you for choosing Find Your Olive Oil!
           </p>
+          <p className="text-lg mb-6 font-semibold text-green-700">
+            This is a product of Pass Christian Olive Oil & Vinegar.
+          </p>
+        </div>
+
+        <div className="bg-white p-8 rounded-lg shadow-md text-center w-full max-w-2xl bg-opacity-90 mt-8">
+          <h2 className="text-3xl font-bold mb-6 text-green-700">Commonly Asked Questions</h2>
+          <div className="space-y-4">
+            {faqData.map((faq, index) => (
+              <div key={index} className="border rounded-lg overflow-hidden">
+                <button
+                  onClick={() => toggleDropdown(index)}
+                  className="w-full text-left px-4 py-2 bg-green-200 hover:bg-green-300 focus:outline-none"
+                >
+                  {faq.question}
+                </button>
+                {openIndex === index && (
+                  <div className="px-4 py-2 bg-green-100">
+                    {faq.answer}
+                  </div>
+                )}
+              </div>
+            ))}
+          </div>
         </div>
       </main>
 

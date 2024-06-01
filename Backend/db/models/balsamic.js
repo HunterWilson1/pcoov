@@ -14,10 +14,6 @@ const Balsamic = sequelize.define('Balsamic', {
     type: DataTypes.JSON,
     allowNull: false,
   },
-  image: {
-    type: DataTypes.STRING,
-    allowNull: false,
-  },
   pairings: {
     type: DataTypes.JSON,
     allowNull: false,

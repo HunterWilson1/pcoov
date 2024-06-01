@@ -21,9 +21,7 @@ const ContactPage = () => {
     >
       <header className="w-full bg-green-800 text-white py-4 shadow-md z-20">
         <nav className="container mx-auto flex justify-between items-center px-4">
-          <div className="flex items-center">
-            <div className="text-2xl font-bold">Find Your Olive Oil</div>
-          </div>
+          <div className="text-2xl font-bold">Find Your Olive Oil</div>
           <div className="hidden md:flex">
             <Link to="/#home" className="mx-2">
               Home
@@ -88,28 +86,23 @@ const ContactPage = () => {
       </header>
 
       <main className="flex-grow container mx-auto px-4 py-8 flex flex-col items-center justify-center">
-        <div className="bg-white p-8 rounded-lg shadow-md text-center w-full max-w-2xl bg-opacity-90">
+        <div className="bg-white p-8 rounded-lg shadow-md text-center w-full max-w-md bg-opacity-90">
           <h2 className="text-3xl font-bold mb-6 text-green-700">Contact Us</h2>
-          <p className="text-lg mb-6">
-            We'd love to hear from you! Please fill out the form below and we'll get in touch with you shortly.
-          </p>
-          <form className="space-y-4">
-            <div>
-              <label className="block text-left text-gray-700" htmlFor="name">Name</label>
-              <input className="w-full px-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-green-500" type="text" id="name" name="name" required />
-            </div>
-            <div>
-              <label className="block text-left text-gray-700" htmlFor="email">Email</label>
-              <input className="w-full px-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-green-500" type="email" id="email" name="email" required />
-            </div>
-            <div>
-              <label className="block text-left text-gray-700" htmlFor="message">Message</label>
-              <textarea className="w-full px-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-green-500" id="message" name="message" rows="4" required></textarea>
-            </div>
-            <button className="bg-green-500 hover:bg-green-600 text-white px-6 py-2 rounded-full shadow-md transition">
-              Send Message
-            </button>
-          </form>
+          <div className="text-lg mb-4">
+            <p className="font-semibold">Pass Christian Olive Oil & Vinegar</p>
+            <p>+1 (228) 452-9470</p>
+            <p>evoo@gulfcoastolives.com</p>
+            <p className="font-semibold mt-4">Hours of Operation:</p>
+            <p>Monday: 10:00 AM - 5:00 PM</p>
+            <p>Tuesday - Saturday: 10:00 AM - 6:00 PM</p>
+            <p>Sunday: 12:00 AM - 4:00 PM</p>
+            <p className="font-semibold pt-7">Pass Christian Olive Oil & Vinegar</p>
+            <p>(555) 555-5555</p>
+            <p className="font-semibold mt-4">Hours of Operation:</p>
+            <p>Monday - Friday: 9:00 AM - 6:00 PM</p>
+            <p>Saturday: 10:00 AM - 4:00 PM</p>
+            <p>Sunday: Closed</p>
+          </div>
         </div>
       </main>
 

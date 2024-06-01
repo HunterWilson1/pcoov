@@ -12,7 +12,6 @@ CREATE TABLE IF NOT EXISTS balsamics (
     name VARCHAR(255) NOT NULL,
     description TEXT NOT NULL,
     tags VARCHAR(225) NOT NULL,
-    image VARCHAR(255) NOT NULL,
     pairings JSON NOT NULL
 );
 
@@ -22,6 +21,5 @@ CREATE TABLE IF NOT EXISTS olive_oils (
     name VARCHAR(255) NOT NULL,
     description TEXT NOT NULL,
     tags VARCHAR(225) NULL,
-    image VARCHAR(255) NOT NULL,
     pairings JSON
 );

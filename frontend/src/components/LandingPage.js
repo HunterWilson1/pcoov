@@ -101,7 +101,7 @@ const LandingPage = () => {
         </nav>
       </header>
 
-      <div className="bg-white rounded-lg shadow-md text-center relative mt-auto mb-auto mx-auto p-6" style={{ maxWidth: '600px', width: '90%' }}>
+      <div className="bg-white rounded-lg shadow-md text-center relative mt-auto mb-auto mx-auto p-6 bg-opacity-90" style={{ maxWidth: '600px', width: '90%' }}>
         <h1 className={`text-2xl sm:text-3xl md:text-4xl font-bold mt-6 mb-4 ${textColor}`}>
           {mainTitleText}
         </h1>

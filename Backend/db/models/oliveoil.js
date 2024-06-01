@@ -15,10 +15,7 @@ const OliveOil = sequelize.define('OliveOil', {
     type: DataTypes.STRING,
     allowNull: false,
   },
-  image: {
-    type: DataTypes.STRING,
-    allowNull: false,
-  },
+
   pairings: {
     type: DataTypes.JSON,
     allowNull: true,

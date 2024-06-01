@@ -1,6 +1,10 @@
 {
     "name": "pcoov",
     "version": "1.0.0",
+    "engines": {
+        "node": "20.x",
+        "npm": "10.x"
+      },
     "scripts": {
       "heroku-postbuild": "cd Backend && npm install && npm run build",
       "start": "cd Backend && npm start"

@@ -1,6 +1,7 @@
 const express = require('express');
 const cors = require('cors');
 const { Sequelize } = require('sequelize');
+const path = require('path');
 const { OliveOil, Balsamic } = require('./db/models'); // Ensure Balsamic is also imported
 
 const app = express();
@@ -8,6 +9,9 @@ const port = process.env.PORT || 3001;
 
 app.use(cors());
 app.use(express.json());
+
+// Serve static files from the React app
+app.use(express.static(path.join(__dirname, '..', 'frontend', 'build')));
 
 // Endpoint for fetching olive oils based on tags
 app.get('/api/olive_oils', async (req, res) => {
@@ -53,6 +57,11 @@ app.get('/api/balsamics', async (req, res) => {
     console.error("Error fetching balsamics:", err);
     res.status(500).send(`Error fetching data: ${err.message}`);
   }
+});
+
+// Serve the frontend's index.html for all other routes
+app.get('*', (req, res) => {
+  res.sendFile(path.join(__dirname, '..', 'frontend', 'build', 'index.html'));
 });
 
 app.listen(port, () => {

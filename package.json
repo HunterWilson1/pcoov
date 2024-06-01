@@ -7,6 +7,7 @@
       },
     "scripts": {
       "heroku-postbuild": "cd Backend && npm install && npm run build",
+      "heroku-postbuild2": "cd frontend && npm install && npm run build",
       "start": "cd Backend && npm start"
     }
   }

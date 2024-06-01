@@ -114,11 +114,11 @@ const OliveOilResultPage = () => {
           {result.pairings && result.pairings.length > 0 && (
             <>
               <h5 className="text-xl font-semibold mt-6">Pairs well with:</h5>
-              <ul className="list-disc list-inside text-left text-lg mx-auto mb-6 max-w-md">
+              <div className="text-center text-lg mx-auto mb-6 max-w-md">
                 {result.pairings.map((pairing, index) => (
-                  <li key={index}>{pairing}</li>
+                  <div key={index}>{pairing}</div>
                 ))}
-              </ul>
+              </div>
             </>
           )}
           <Link

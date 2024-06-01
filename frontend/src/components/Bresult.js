@@ -26,7 +26,10 @@ const BalsamicResultPage = () => {
   }
 
   return (
-    <div className="min-h-screen flex flex-col items-center" style={backgroundStyle}>
+    <div
+      className="min-h-screen flex flex-col items-center"
+      style={backgroundStyle}
+    >
       <header className="w-full bg-pink-800 text-white py-4 shadow-md relative z-20">
         <nav className="container mx-auto flex justify-between items-center px-4">
           <div className="text-2xl font-bold">Find your Balsamic!</div>
@@ -55,13 +58,17 @@ const BalsamicResultPage = () => {
                 )}
               </Menu.Button>
               <Menu.Items
-                className={`${isOpen ? "block" : "hidden"} absolute right-0 mt-2 w-48 rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5 focus:outline-none z-30`}
+                className={`${
+                  isOpen ? "block" : "hidden"
+                } absolute right-0 mt-2 w-48 rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5 focus:outline-none z-30`}
               >
                 <Menu.Item>
                   {({ active }) => (
                     <Link
                       to="/"
-                      className={`${active ? "bg-gray-100" : ""} block px-4 py-2 text-sm text-gray-700`}
+                      className={`${
+                        active ? "bg-gray-100" : ""
+                      } block px-4 py-2 text-sm text-gray-700`}
                     >
                       Home
                     </Link>
@@ -71,7 +78,9 @@ const BalsamicResultPage = () => {
                   {({ active }) => (
                     <Link
                       to="/about"
-                      className={`${active ? "bg-gray-100" : ""} block px-4 py-2 text-sm text-gray-700`}
+                      className={`${
+                        active ? "bg-gray-100" : ""
+                      } block px-4 py-2 text-sm text-gray-700`}
                     >
                       About
                     </Link>
@@ -81,7 +90,9 @@ const BalsamicResultPage = () => {
                   {({ active }) => (
                     <Link
                       to="/contact"
-                      className={`${active ? "bg-gray-100" : ""} block px-4 py-2 text-sm text-gray-700`}
+                      className={`${
+                        active ? "bg-gray-100" : ""
+                      } block px-4 py-2 text-sm text-gray-700`}
                     >
                       Contact
                     </Link>
@@ -94,31 +105,30 @@ const BalsamicResultPage = () => {
       </header>
 
       <div className="flex-grow flex items-center justify-center w-full pt-16">
-  <div className="bg-white p-12 rounded-lg shadow-2xl text-center w-full max-w-3xl bg-opacity-90">
-    <h3 className="text-3xl font-extrabold mb-6 text-pink-800">
-      Recommended Balsamic
-    </h3>
-    <h4 className="text-2xl font-semibold mb-4">{result.name}</h4>
-    <p className="text-lg mb-6">{result.description}</p>
-    {result.pairings && result.pairings.length > 0 && (
-      <>
-        <h5 className="text-xl font-semibold mt-6">Pairs well with:</h5>
-        <ul className="list-disc list-inside text-left text-lg mx-auto mb-6 max-w-md">
-          {result.pairings.map((pairing, index) => (
-            <li key={index}>{pairing}</li>
-          ))}
-        </ul>
-      </>
-    )}
-    <Link
-      to="/"
-      className="mt-8 bg-pink-800 hover:bg-pink-900 text-white px-6 py-3 rounded-full shadow-lg transition-transform transform hover:scale-105"
-    >
-      Back to Home
-    </Link>
-  </div>
-</div>
-
+        <div className="bg-white p-12 rounded-lg shadow-2xl text-center w-full max-w-3xl bg-opacity-90">
+          <h3 className="text-3xl font-extrabold mb-6 text-pink-800">
+            Recommended Balsamic
+          </h3>
+          <h4 className="text-2xl font-semibold mb-4">{result.name}</h4>
+          <p className="text-lg mb-6">{result.description}</p>
+          {result.pairings && result.pairings.length > 0 && (
+            <>
+              <h5 className="text-xl font-semibold mt-6">Pairs well with:</h5>
+              <div className="text-center text-lg mx-auto mb-6 max-w-md">
+                {result.pairings.map((pairing, index) => (
+                  <div key={index}>{pairing}</div>
+                ))}
+              </div>
+            </>
+          )}
+          <Link
+            to="/"
+            className="mt-8 bg-pink-800 hover:bg-pink-900 text-white px-6 py-3 rounded-full shadow-lg transition-transform transform hover:scale-105"
+          >
+            Back to Home
+          </Link>
+        </div>
+      </div>
 
       <footer className="w-full bg-pink-900 text-white py-4 shadow-md relative z-20">
         <div className="container mx-auto text-center">

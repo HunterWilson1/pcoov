@@ -4,11 +4,15 @@ require('dotenv').config();
 let sequelize;
 
 if (process.env.NODE_ENV === 'production') {
-  const url = new URL(process.env.JAWSDB_URL);
-  sequelize = new Sequelize(url.pathname.slice(1), url.username, url.password, {
-    host: url.hostname,
-    dialect: 'mysql',
-    port: url.port,
+  sequelize = new Sequelize(process.env.DATABASE_URL, {
+    dialect: 'postgres',
+    protocol: 'postgres',
+    dialectOptions: {
+      ssl: {
+        require: true,
+        rejectUnauthorized: false
+      }
+    }
   });
 } else {
   sequelize = new Sequelize(
@@ -18,6 +22,7 @@ if (process.env.NODE_ENV === 'production') {
     {
       host: process.env.DB_HOST,
       dialect: process.env.DB_DIALECT || 'mysql',
+      port: process.env.DB_PORT || 3306,
     }
   );
 }

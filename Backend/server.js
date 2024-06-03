@@ -1,7 +1,8 @@
 const express = require('express');
 const cors = require('cors');
-const sequelize = require('./db/connection'); // Adjust the path if needed
-const { OliveOil, Balsamic } = require('./db/models'); // Ensure models are correctly imported
+const path = require('path'); // Add this line
+const sequelize = require('./connection'); // Ensure this path is correct
+const { OliveOil, Balsamic } = require('./models'); // Ensure this path is correct
 
 const app = express();
 const port = process.env.PORT || 3001;
@@ -9,6 +10,7 @@ const port = process.env.PORT || 3001;
 app.use(cors());
 app.use(express.json());
 
+// Serve static files from the React app
 app.use(express.static(path.join(__dirname, 'client/build')));
 
 app.get('/', (req, res) => {
@@ -57,6 +59,11 @@ app.get('/api/balsamics', async (req, res) => {
     console.error("Error fetching balsamics:", err);
     res.status(500).send(`Error fetching data: ${err.message}`);
   }
+});
+
+// All other GET requests not handled before will return the React app
+app.get('*', (req, res) => {
+  res.sendFile(path.join(__dirname, 'client/build', 'index.html'));
 });
 
 app.listen(port, () => {

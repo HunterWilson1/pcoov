@@ -1,7 +1,7 @@
 const express = require('express');
 const cors = require('cors');
 const sequelize = require('./connection'); // Adjust the path if needed
-const { OliveOil, Balsamic } = require('./models'); // Ensure models are correctly imported
+const { OliveOil, Balsamic } = require('./db/models'); // Ensure models are correctly imported
 
 const app = express();
 const port = process.env.PORT || 3001;

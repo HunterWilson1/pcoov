@@ -1,8 +1,8 @@
 const express = require('express');
 const cors = require('cors');
-const path = require('path'); // Add this line
-const sequelize = require('./connection'); // Ensure this path is correct
-const { OliveOil, Balsamic } = require('./models'); // Ensure this path is correct
+const path = require('path'); // Import path module
+const sequelize = require('./db/connection'); // Ensure this path is correct
+const { OliveOil, Balsamic } = require('./db/models'); // Ensure this path is correct
 
 const app = express();
 const port = process.env.PORT || 3001;
@@ -61,11 +61,11 @@ app.get('/api/balsamics', async (req, res) => {
   }
 });
 
-// All other GET requests not handled before will return the React app
-app.get('*', (req, res) => {
-  res.sendFile(path.join(__dirname, 'client/build', 'index.html'));
-});
-
 app.listen(port, () => {
   console.log(`Server running on port ${port}`);
+  sequelize.authenticate().then(() => {
+    console.log('Connection has been established successfully.');
+  }).catch(err => {
+    console.error('Unable to connect to the database:', err);
+  });
 });

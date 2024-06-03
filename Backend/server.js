@@ -1,8 +1,7 @@
 const express = require('express');
 const cors = require('cors');
-const { Sequelize } = require('sequelize');
-const sequelize = require('./connection'); // Ensure this path is correct
-const { OliveOil, Balsamic } = require('./db/models'); // Ensure this path is correct
+const sequelize = require('./connection'); // Adjust the path if needed
+const { OliveOil, Balsamic } = require('./models'); // Ensure models are correctly imported
 
 const app = express();
 const port = process.env.PORT || 3001;
@@ -16,10 +15,10 @@ app.get('/api/olive_oils', async (req, res) => {
     let oliveOils;
     if (tags) {
       const tagArray = tags.split(',').map(tag => tag.trim());
-      const conditions = tagArray.map(tag => Sequelize.literal(`FIND_IN_SET('${tag}', REPLACE(tags, ' ', '')) > 0`));
+      const conditions = tagArray.map(tag => sequelize.literal(`FIND_IN_SET('${tag}', REPLACE(tags, ' ', '')) > 0`));
       oliveOils = await OliveOil.findAll({
         where: {
-          [Sequelize.Op.or]: conditions
+          [sequelize.Op.or]: conditions
         }
       });
     } else {
@@ -38,10 +37,10 @@ app.get('/api/balsamics', async (req, res) => {
     let balsamics;
     if (tags) {
       const tagArray = tags.split(',').map(tag => tag.trim());
-      const conditions = tagArray.map(tag => Sequelize.literal(`FIND_IN_SET('${tag}', REPLACE(tags, ' ', '')) > 0`));
+      const conditions = tagArray.map(tag => sequelize.literal(`FIND_IN_SET('${tag}', REPLACE(tags, ' ', '')) > 0`));
       balsamics = await Balsamic.findAll({
         where: {
-          [Sequelize.Op.or]: conditions
+          [sequelize.Op.or]: conditions
         }
       });
     } else {

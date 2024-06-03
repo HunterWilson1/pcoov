@@ -89,9 +89,17 @@ const BalsamicQuiz = () => {
 
   const fetchDataAndCalculateResult = (finalTags) => {
     const tagsQuery = finalTags.join(',');
-    const apiUrl = process.env.REACT_APP_API_URL;
+    const apiUrl = process.env.REACT_APP_API_URL || 'http://localhost:3001';
     fetch(`${apiUrl}/api/balsamics?tags=${encodeURIComponent(tagsQuery)}`)
-      .then(response => response.ok ? response.json() : Promise.reject(`HTTP error! status: ${response.status}`))
+      .then(response => {
+        if (response.ok) {
+          return response.json();
+        } else {
+          return response.text().then(text => {
+            throw new Error(`HTTP error! status: ${response.status}, response: ${text}`);
+          });
+        }
+      })
       .then(data => {
         console.log("Fetched data:", data);  // Log fetched data
         if (data.balsamics && data.balsamics.length > 0) {
@@ -106,6 +114,7 @@ const BalsamicQuiz = () => {
         setLoading(false);
       });
   };
+  
   
   const calculateResult = (finalTags, balsamicData) => {
     let bestMatch = null;

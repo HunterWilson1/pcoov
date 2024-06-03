@@ -73,7 +73,8 @@ const OliveOilQuiz = () => {
 
   const fetchDataAndCalculateResult = (finalTags) => {
     const tagsQuery = finalTags.join(',');
-    fetch(`http://localhost:3001/api/olive_oils?tags=${encodeURIComponent(tagsQuery)}`)
+    const apiUrl = process.env.REACT_APP_API_URL;
+    fetch(`${apiUrl}/api/olive_oils?tags=${encodeURIComponent(tagsQuery)}`)
       .then(response => response.ok ? response.json() : Promise.reject(`HTTP error! status: ${response.status}`))
       .then(data => {
         console.log("Fetched data:", data);  // Log fetched data
@@ -89,6 +90,7 @@ const OliveOilQuiz = () => {
         setLoading(false);
       });
   };
+  
 
   const calculateResult = (finalTags, oliveOilData) => {
     let bestMatch = null;

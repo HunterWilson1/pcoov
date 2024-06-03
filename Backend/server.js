@@ -1,7 +1,8 @@
 const express = require('express');
 const cors = require('cors');
 const { Sequelize } = require('sequelize');
-const { OliveOil, Balsamic } = require('./models'); // Ensure correct path
+const sequelize = require('./connection'); // Ensure this path is correct
+const { OliveOil, Balsamic } = require('./db/models'); // Ensure this path is correct
 
 const app = express();
 const port = process.env.PORT || 3001;
@@ -9,7 +10,6 @@ const port = process.env.PORT || 3001;
 app.use(cors());
 app.use(express.json());
 
-// Endpoint for fetching olive oils based on tags
 app.get('/api/olive_oils', async (req, res) => {
   const tags = req.query.tags;
   try {
@@ -32,7 +32,6 @@ app.get('/api/olive_oils', async (req, res) => {
   }
 });
 
-// Endpoint for fetching balsamics based on tags
 app.get('/api/balsamics', async (req, res) => {
   const tags = req.query.tags;
   try {

@@ -73,8 +73,7 @@ const OliveOilQuiz = () => {
 
   const fetchDataAndCalculateResult = (finalTags) => {
     const tagsQuery = finalTags.join(',');
-    const apiUrl = process.env.REACT_APP_API_URL;
-    fetch(`${apiUrl}/api/olive_oils?tags=${encodeURIComponent(tagsQuery)}`)
+    fetch(`https://find-your-oil-3d3c623d1990.herokuapp.com/api/olive_oils?tags=${encodeURIComponent(tagsQuery)}`)
       .then(response => response.ok ? response.json() : Promise.reject(`HTTP error! status: ${response.status}`))
       .then(data => {
         console.log("Fetched data:", data);  // Log fetched data
@@ -89,7 +88,8 @@ const OliveOilQuiz = () => {
         setError(`Failed to fetch olive oils: ${error.message}`);
         setLoading(false);
       });
-  };
+};
+
   
 
   const calculateResult = (finalTags, oliveOilData) => {

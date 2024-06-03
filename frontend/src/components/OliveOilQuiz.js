@@ -90,8 +90,6 @@ const OliveOilQuiz = () => {
       });
 };
 
-  
-
   const calculateResult = (finalTags, oliveOilData) => {
     let bestMatch = null;
     let highestScore = 0;

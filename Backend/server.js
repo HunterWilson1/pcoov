@@ -5,67 +5,43 @@ const sequelize = require('./db/connection'); // Ensure this path is correct
 const { OliveOil, Balsamic } = require('./db/models'); // Ensure this path is correct
 
 const app = express();
-const port = process.env.PORT || 3001;
+const PORT = process.env.PORT || 3000;
 
-app.use(cors());
-app.use(express.json());
+// Middleware
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: true }));
 
 // Serve static files from the React app
-app.use(express.static(path.join(__dirname, 'client/build')));
+app.use(express.static(path.join(__dirname, '../client/build')));
 
-app.get('/', (req, res) => {
-  res.sendFile(path.join(__dirname, 'client/build', 'index.html'));
-});
-
+// API endpoint for olive oils
 app.get('/api/olive_oils', async (req, res) => {
-  const tags = req.query.tags;
+  const tags = req.query.tags.split(',');
   try {
-    let oliveOils;
-    if (tags) {
-      const tagArray = tags.split(',').map(tag => tag.trim());
-      const conditions = tagArray.map(tag => sequelize.literal(`FIND_IN_SET('${tag}', REPLACE(tags, ' ', '')) > 0`));
-      oliveOils = await OliveOil.findAll({
-        where: {
-          [sequelize.Op.or]: conditions
-        }
-      });
-    } else {
-      oliveOils = await OliveOil.findAll();
-    }
+    const oliveOils = await getOliveOilsByTags(tags); // Define this function to fetch data based on tags
     res.json({ olive_oils: oliveOils });
-  } catch (err) {
-    console.error("Error fetching olive oils:", err);
-    res.status(500).send(`Error fetching data: ${err.message}`);
+  } catch (error) {
+    res.status(500).json({ error: 'Error fetching data' });
   }
 });
 
+// API endpoint for balsamics
 app.get('/api/balsamics', async (req, res) => {
-  const tags = req.query.tags;
+  const tags = req.query.tags.split(',');
   try {
-    let balsamics;
-    if (tags) {
-      const tagArray = tags.split(',').map(tag => tag.trim());
-      const conditions = tagArray.map(tag => sequelize.literal(`FIND_IN_SET('${tag}', REPLACE(tags, ' ', '')) > 0`));
-      balsamics = await Balsamic.findAll({
-        where: {
-          [sequelize.Op.or]: conditions
-        }
-      });
-    } else {
-      balsamics = await Balsamic.findAll();
-    }
+    const balsamics = await getBalsamicsByTags(tags); // Define this function to fetch data based on tags
     res.json({ balsamics: balsamics });
-  } catch (err) {
-    console.error("Error fetching balsamics:", err);
-    res.status(500).send(`Error fetching data: ${err.message}`);
+  } catch (error) {
+    res.status(500).json({ error: 'Error fetching data' });
   }
 });
 
-app.listen(port, () => {
-  console.log(`Server running on port ${port}`);
-  sequelize.authenticate().then(() => {
-    console.log('Connection has been established successfully.');
-  }).catch(err => {
-    console.error('Unable to connect to the database:', err);
-  });
+// All remaining requests return the React app, so it can handle routing.
+app.get('*', (req, res) => {
+  res.sendFile(path.join(__dirname, '../client/build/index.html'));
+});
+
+// Start the server
+app.listen(PORT, () => {
+  console.log(`Server running on port ${PORT}`);
 });

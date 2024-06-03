@@ -9,6 +9,10 @@ const port = process.env.PORT || 3001;
 app.use(cors());
 app.use(express.json());
 
+app.get('/', (req, res) => {
+  res.send('Welcome to the Olive Oil & Balsamic ');
+});
+
 app.get('/api/olive_oils', async (req, res) => {
   const tags = req.query.tags;
   try {

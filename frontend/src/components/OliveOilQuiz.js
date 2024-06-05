@@ -73,7 +73,7 @@ const OliveOilQuiz = () => {
 
   const fetchDataAndCalculateResult = (finalTags) => {
     const tagsQuery = finalTags.join(',');
-    const apiUrl = 'https://your-heroku-app.herokuapp.com';
+    const apiUrl = 'https://find-your-oil-3d3c623d1990.herokuapp.com';
     fetch(`${apiUrl}/api/olive_oils?tags=${encodeURIComponent(tagsQuery)}`)
       .then(response => response.ok ? response.json() : Promise.reject(`HTTP error! status: ${response.status}`))
       .then(data => {

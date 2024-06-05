@@ -89,22 +89,23 @@ const BalsamicQuiz = () => {
 
   const fetchDataAndCalculateResult = (finalTags) => {
     const tagsQuery = finalTags.join(',');
-    fetch(`http://localhost:5000/api/balsamics?tags=${encodeURIComponent(tagsQuery)}`)
+    const apiUrl = 'https://find-your-oil-3d3c623d1990.herokuapp.com';
+    fetch(`${apiUrl}/api/balsamics?tags=${encodeURIComponent(tagsQuery)}`)
       .then(response => response.ok ? response.json() : Promise.reject(`HTTP error! status: ${response.status}`))
       .then(data => {
-        console.log("Fetched data:", data);  // Log fetched data
-        if (data.balsamics && data.balsamics.length > 0) {
+        console.log("Fetched data:", data);
+        if (data.balsamics.length > 0) {
           calculateResult(finalTags, data.balsamics);
         } else {
           throw new Error("No valid data found based on selected tags");
         }
       })
       .catch(error => {
-        console.error("Fetch error:", error); // Log any error
+        console.error("Fetch error:", error);
         setError(`Failed to fetch balsamics: ${error.message}`);
         setLoading(false);
       });
-  };
+  };  
   
   const calculateResult = (finalTags, balsamicData) => {
     let bestMatch = null;

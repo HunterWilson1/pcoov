@@ -1,5 +1,5 @@
 // Backend/models/index.js
-const OliveOil = require('./oliveOil');
+const OliveOil = require('./oliveoil');
 const Balsamic = require('./balsamic');
 
 module.exports = {

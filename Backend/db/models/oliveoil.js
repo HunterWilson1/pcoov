@@ -4,7 +4,7 @@ const Schema = mongoose.Schema;
 
 const oliveOilSchema = new Schema({
   name: { type: String, required: true },
-  type: { type: String, required: true },
+  description: { type: String, required: true },
   tags: { type: [String], required: true },
   pairings: {type: [String], required: true}
   // Add other fields as necessary

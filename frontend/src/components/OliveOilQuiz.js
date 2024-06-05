@@ -73,22 +73,23 @@ const OliveOilQuiz = () => {
 
   const fetchDataAndCalculateResult = (finalTags) => {
     const tagsQuery = finalTags.join(',');
-    fetch(`http://localhost:5000/api/olive_oils?tags=${encodeURIComponent(tagsQuery)}`)
+    const apiUrl = 'https://your-heroku-app.herokuapp.com';
+    fetch(`${apiUrl}/api/olive_oils?tags=${encodeURIComponent(tagsQuery)}`)
       .then(response => response.ok ? response.json() : Promise.reject(`HTTP error! status: ${response.status}`))
       .then(data => {
-        console.log("Fetched data:", data);  // Log fetched data
-        if (data.olive_oils && data.olive_oils.length > 0) {
+        console.log("Fetched data:", data);
+        if (data.olive_oils.length > 0) {
           calculateResult(finalTags, data.olive_oils);
         } else {
           throw new Error("No valid data found based on selected tags");
         }
       })
       .catch(error => {
-        console.error("Fetch error:", error); // Log any error
+        console.error("Fetch error:", error);
         setError(`Failed to fetch olive oils: ${error.message}`);
         setLoading(false);
       });
-  };
+  };  
 
   const calculateResult = (finalTags, oliveOilData) => {
     let bestMatch = null;

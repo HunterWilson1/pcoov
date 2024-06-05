@@ -1,13 +1,13 @@
 {
   "name": "pcoov",
   "version": "1.0.0",
-  "main": "backend/server.js",
+  "main": "Backend/server.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "concurrently \"cd backend && npm run start\" \"cd frontend && npm start\"",
-    "develop": "concurrently \"cd backend && npm run watch\" \"cd frontend && npm start\"",
-    "install": "cd backend && npm i && cd ../frontend && npm i",
-    "seed": "cd backend && npm run seed",
+    "start": "concurrently \"cd Backend && npm run start\" \"cd frontend && npm start\"",
+    "develop": "concurrently \"cd Backend && npm run watch\" \"cd frontend && npm start\"",
+    "install": "cd Backend && npm i && cd ../frontend && npm i",
+    "seed": "cd Backend && npm run seed",
     "build": "cd frontend && npm run build"
   },
   "dependencies": {

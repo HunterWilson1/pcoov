@@ -1,16 +1,7 @@
-// seed.js
 const mongoose = require('mongoose');
-const OliveOil = require('./models/oliveoil');
-const Balsamic = require('./models/balsamic'); // Assuming you have a similar model for Balsamic
-
-mongoose.connect(process.env.MONGO_URI, {
-  useNewUrlParser: true,
-  useUnifiedTopology: true,
-});
-
-const seedData = async () => {
-  await OliveOil.deleteMany({});
-  await Balsamic.deleteMany({}); // Delete existing data if needed
+const OliveOil = require('../models/oliveOil');
+const Balsamic = require('../models/balsamic');
+require('dotenv').config(); // Assuming you have a similar model for Balsamic
 
   const oliveOils = [
     {
@@ -456,16 +447,26 @@ const seedData = async () => {
       "pairings": ["Garlic Olive Oil", "All Natural Black Truffle Olive Oil", "Wild Mushroom and Sage Olive Oil"]
     }
   ]
+
+  const seedDB = async () => {
+    await mongoose.connect(process.env.MONGO_URI, {
+      useNewUrlParser: true,
+      useUnifiedTopology: true,
+    });
   
-
-  await OliveOil.insertMany(oliveOils);
-  await Balsamic.insertMany(balsamics);
-
-  console.log('Database seeded!');
-  mongoose.connection.close();
-};
-
-seedData().catch(err => {
-  console.error(err);
-  mongoose.connection.close();
-});
+    console.log('MongoDB connected');
+  
+    try {
+      await OliveOil.deleteMany({});
+      await Balsamic.deleteMany({});
+      await OliveOil.insertMany(oliveOils);
+      await Balsamic.insertMany(balsamics);
+      console.log('Database seeded successfully');
+    } catch (err) {
+      console.error('Error seeding database:', err);
+    } finally {
+      mongoose.connection.close();
+    }
+  };
+  
+  seedDB();

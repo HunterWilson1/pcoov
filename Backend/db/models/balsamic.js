@@ -1,23 +1,14 @@
-const { DataTypes } = require('sequelize');
-const sequelize = require('../connection');
+// Backend/models/balsamic.js
+const mongoose = require('mongoose');
+const Schema = mongoose.Schema;
 
-const Balsamic = sequelize.define('Balsamic', {
-  name: {
-    type: DataTypes.STRING,
-    allowNull: false,
-  },
-  description: {
-    type: DataTypes.TEXT,
-    allowNull: false,
-  },
-  tags: {
-    type: DataTypes.JSON,
-    allowNull: false,
-  },
-  pairings: {
-    type: DataTypes.JSON,
-    allowNull: false,
-  },
+const balsamicSchema = new Schema({
+  name: { type: String, required: true },
+  type: { type: String, required: true },
+  tags: { type: [String], required: true },
+  // Add other fields as necessary
 });
+
+const Balsamic = mongoose.model('Balsamic', balsamicSchema);
 
 module.exports = Balsamic;

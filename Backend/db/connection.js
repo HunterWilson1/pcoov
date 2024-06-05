@@ -1,39 +1,20 @@
-const { Sequelize } = require('sequelize');
+// Backend/db/connection.js
+const mongoose = require('mongoose');
 require('dotenv').config();
 
-let sequelize;
+const connectDB = async () => {
+  try {
+    const uri = process.env.MONGO_URI;
+    console.log('Connecting to MongoDB with URI:', uri); // Log the URI to verify
+    const conn = await mongoose.connect(uri, {
+      useNewUrlParser: true,
+      useUnifiedTopology: true,
+    });
+    console.log(`MongoDB Connected: ${conn.connection.host}`);
+  } catch (error) {
+    console.error(`Error: ${error.message}`);
+    process.exit(1);
+  }
+};
 
-if (process.env.DATABASE_URL) {
-  // Heroku environment
-  sequelize = new Sequelize(process.env.DATABASE_URL, {
-    dialect: 'postgres',
-    protocol: 'postgres',
-    dialectOptions: {
-      ssl: {
-        require: true,
-        rejectUnauthorized: false // For self-signed certificates
-      }
-    }
-  });
-} else {
-  // Local environment
-  sequelize = new Sequelize(
-    process.env.DB_NAME,
-    process.env.DB_USER,
-    process.env.DB_PASSWORD,
-    {
-      host: process.env.DB_HOST,
-      dialect: process.env.DB_DIALECT || 'postgres',
-    }
-  );
-}
-
-sequelize.authenticate()
-  .then(() => {
-    console.log('Connection has been established successfully.');
-  })
-  .catch(err => {
-    console.error('Unable to connect to the database:', err);
-  });
-
-module.exports = sequelize;
+module.exports = connectDB;

@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { Menu } from "@headlessui/react";
 import { XMarkIcon, Bars3Icon } from "@heroicons/react/24/solid";
@@ -73,11 +73,11 @@ const OliveOilQuiz = () => {
 
   const fetchDataAndCalculateResult = (finalTags) => {
     const tagsQuery = finalTags.join(',');
-    fetch(`https://find-your-oil-3d3c623d1990.herokuapp.com/api/olive_oils?tags=${encodeURIComponent(tagsQuery)}`)
+    fetch(`http://localhost:5000/api/olive_oils?tags=${encodeURIComponent(tagsQuery)}`)
       .then(response => response.ok ? response.json() : Promise.reject(`HTTP error! status: ${response.status}`))
       .then(data => {
         console.log("Fetched data:", data);  // Log fetched data
-        if (data.olive_oils.length > 0) {
+        if (data.olive_oils && data.olive_oils.length > 0) {
           calculateResult(finalTags, data.olive_oils);
         } else {
           throw new Error("No valid data found based on selected tags");
@@ -88,14 +88,14 @@ const OliveOilQuiz = () => {
         setError(`Failed to fetch olive oils: ${error.message}`);
         setLoading(false);
       });
-};
+  };
 
   const calculateResult = (finalTags, oliveOilData) => {
     let bestMatch = null;
     let highestScore = 0;
 
     oliveOilData.forEach((oil) => {
-      const oilTags = oil.tags.split(', '); // Split the tags string into an array
+      const oilTags = oil.tags; // Assuming tags are stored as an array
       const matchScore = oilTags.filter(tag => finalTags.includes(tag)).length;
       if (matchScore > highestScore) {
         bestMatch = oil;

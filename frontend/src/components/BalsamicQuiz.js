@@ -89,8 +89,7 @@ const BalsamicQuiz = () => {
 
   const fetchDataAndCalculateResult = (finalTags) => {
     const tagsQuery = finalTags.join(',');
-    const apiUrl = process.env.REACT_APP_API_URL || 'http://localhost:3001';
-    fetch(`${apiUrl}/api/balsamics?tags=${encodeURIComponent(tagsQuery)}`)
+    fetch(`http://localhost:5000/api/balsamics?tags=${encodeURIComponent(tagsQuery)}`)
       .then(response => response.ok ? response.json() : Promise.reject(`HTTP error! status: ${response.status}`))
       .then(data => {
         console.log("Fetched data:", data);  // Log fetched data
@@ -107,13 +106,12 @@ const BalsamicQuiz = () => {
       });
   };
   
-  
   const calculateResult = (finalTags, balsamicData) => {
     let bestMatch = null;
     let highestScore = 0;
 
     balsamicData.forEach((balsamic) => {
-      const balsamicTags = balsamic.tags.split(', '); // Split the tags string into an array
+      const balsamicTags = balsamic.tags; // Assuming tags are stored as an array
       const matchScore = balsamicTags.filter(tag => finalTags.includes(tag)).length;
       if (matchScore > highestScore) {
         bestMatch = balsamic;

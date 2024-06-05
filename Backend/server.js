@@ -1,70 +1,71 @@
+// Backend/server.js
 const express = require('express');
 const bodyParser = require('body-parser');
 const path = require('path');
-const cors = require('cors');
-const sequelize = require('./db/connection');
-const OliveOil = require('./models/oliveOil');
-const Balsamic = require('./models/balsamic');
-require('dotenv').config();
+const connectDB = require('./db/connection');
+const { OliveOil, Balsamic } = require('./db/models');
+require('dotenv').config(); // Ensure this is at the top
 
+// Log the environment variable to verify it's being loaded
+console.log('MONGO_URI:', process.env.MONGO_URI);
+
+// Initialize express app
 const app = express();
-const PORT = process.env.PORT || 3000;
 
 // Middleware
-app.use(cors());
 app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({ extended: true }));
 
-// Serve static files from the React app
-app.use(express.static(path.join(__dirname, '../client/build')));
+// Connect to MongoDB
+connectDB();
 
-// API endpoint for olive oils
+// Routes for Olive Oils
 app.get('/api/olive_oils', async (req, res) => {
-  const tags = req.query.tags ? req.query.tags.split(',') : [];
   try {
-    const oliveOils = await OliveOil.findAll({
-      where: {
-        tags: {
-          [sequelize.Op.overlap]: tags,
-        },
-      },
-    });
+    const oliveOils = await OliveOil.find({});
     res.json({ olive_oils: oliveOils });
   } catch (error) {
-    console.error('Error fetching olive oils:', error);
-    res.status(500).json({ error: 'Error fetching data' });
+    res.status(500).send({ error: 'Failed to fetch olive oils' });
   }
 });
 
-// API endpoint for balsamics
-app.get('/api/balsamics', async (req, res) => {
-  const tags = req.query.tags ? req.query.tags.split(',') : [];
+app.get('/api/olive_oils/:tags', async (req, res) => {
   try {
-    const balsamics = await Balsamic.findAll({
-      where: {
-        tags: {
-          [sequelize.Op.overlap]: tags,
-        },
-      },
-    });
+    const tags = req.params.tags.split(',');
+    const oliveOils = await OliveOil.find({ tags: { $in: tags } });
+    res.json({ olive_oils: oliveOils });
+  } catch (error) {
+    res.status(500).send({ error: 'Failed to fetch olive oils by tags' });
+  }
+});
+
+// Routes for Balsamics
+app.get('/api/balsamics', async (req, res) => {
+  try {
+    const balsamics = await Balsamic.find({});
     res.json({ balsamics: balsamics });
   } catch (error) {
-    console.error('Error fetching balsamics:', error);
-    res.status(500).json({ error: 'Error fetching data' });
+    res.status(500).send({ error: 'Failed to fetch balsamics' });
   }
 });
 
-// All remaining requests return the React app, so it can handle routing.
+app.get('/api/balsamics/:tags', async (req, res) => {
+  try {
+    const tags = req.params.tags.split(',');
+    const balsamics = await Balsamic.find({ tags: { $in: tags } });
+    res.json({ balsamics: balsamics });
+  } catch (error) {
+    res.status(500).send({ error: 'Failed to fetch balsamics by tags' });
+  }
+});
+
+// Serve static files from the React app
+app.use(express.static('client/build'));
 app.get('*', (req, res) => {
-  res.sendFile(path.join(__dirname, '../client/build/index.html'));
+  res.sendFile(path.resolve(__dirname, 'client', 'build', 'index.html'));
 });
 
 // Start the server
+const PORT = process.env.PORT || 5000;
 app.listen(PORT, () => {
   console.log(`Server running on port ${PORT}`);
 });
-
-// Sync database
-sequelize.sync()
-  .then(() => console.log('Database synced'))
-  .catch(err => console.error('Error syncing database:', err));

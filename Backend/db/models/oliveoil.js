@@ -1,25 +1,14 @@
-// oliveoil.js
-const { DataTypes } = require('sequelize');
-const sequelize = require('../connection'); // Assuming this is where your Sequelize connection is setup
+// Backend/models/oliveOil.js
+const mongoose = require('mongoose');
+const Schema = mongoose.Schema;
 
-const OliveOil = sequelize.define('OliveOil', {
-  name: {
-    type: DataTypes.STRING,
-    allowNull: false,
-  },
-  description: {
-    type: DataTypes.TEXT,
-    allowNull: false,
-  },
-  tags: {
-    type: DataTypes.STRING,
-    allowNull: false,
-  },
-
-  pairings: {
-    type: DataTypes.JSON,
-    allowNull: true,
-  },
+const oliveOilSchema = new Schema({
+  name: { type: String, required: true },
+  type: { type: String, required: true },
+  tags: { type: [String], required: true },
+  // Add other fields as necessary
 });
+
+const OliveOil = mongoose.model('OliveOil', oliveOilSchema);
 
 module.exports = OliveOil;

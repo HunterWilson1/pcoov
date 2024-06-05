@@ -1,14 +1,12 @@
 {
   "name": "pcoov",
   "version": "1.0.0",
-  "main": "Backend/server.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "concurrently \"cd Backend && npm run start\" \"cd frontend && npm start\"",
-    "develop": "concurrently \"cd Backend && npm run watch\" \"cd frontend && npm start\"",
-    "install": "cd Backend && npm i && cd ../frontend && npm i",
-    "seed": "cd Backend && npm run seed",
-    "build": "cd frontend && npm run build"
+    "start": "concurrently \"cd Backend && npm start\" \"cd frontend && npm start\"",
+    "heroku-postbuild": "cd Backend && npm install && cd ../frontend && npm install && npm run build",
+    "dev": "concurrently \"npm run server\" \"npm run client\"",
+    "server": "nodemon Backend/server.js",
+    "client": "npm start --prefix frontend"
   },
   "dependencies": {
     "express": "^4.17.1",
@@ -19,5 +17,8 @@
   },
   "devDependencies": {
     "nodemon": "^2.0.7"
+  },
+  "engines": {
+    "node": "14.x"
   }
 }

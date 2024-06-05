@@ -1,6 +1,6 @@
 const mongoose = require('mongoose');
-const OliveOil = require('../models/oliveoil');
-const Balsamic = require('../models/balsamic');
+const OliveOil = require('./models/oliveoil');
+const Balsamic = require('./models/balsamic');
 require('dotenv').config(); // Assuming you have a similar model for Balsamic
 
   const oliveOils = [
